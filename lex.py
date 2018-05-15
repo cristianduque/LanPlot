@@ -1,5 +1,5 @@
 import ply.lex as lex
-# import FourierTransform
+
 import numpy as np
 from FourierTransform import FourierTransform
 from FourierTransform import plotfft
@@ -30,14 +30,15 @@ tokens = ('PLOT',
 # reserved words
 reserved = {
             'plot':'PLOT',
-            'fouriertransform': 'FOURIERTRANSFORM'
+            'fouriertransform': 'FOURIERTRANSFORM',
+            'pi' : 'PI'
 }
 
 functions = {
             'cos': 'COS',
             'sin': 'SIN',
             'exp': 'EXP',
-            'pi' : 'PI'
+            'pulse': 'PULSE'
 }
 
 # Regular expression rules for simple tokens
@@ -78,8 +79,10 @@ def t_EXPRNAME(t):
         t.type = functions.get(t.value,'ID')
     if t.value in 'exp':
         t.type = functions.get(t.value,'ID')
+    if t.value in 'pulse':
+        t.type = functions.get(t.value, 'ID')
     if t.value in 'pi':
-        t.type = functions.get(t.value,'ID')
+        t.type = reserved.get(t.value,'ID')
     return t
 
 # Define a rule so we can track line numbers
@@ -100,12 +103,6 @@ def t_error(t):
 
 # Build the lexer
 lexer = lex.lex()
-
-# Test it out
-# data = '''cos(2*pi*50*t)'''
-
-# Give the lexer some input
-# lexer.input(data)
 
 def printok():
     while True:
