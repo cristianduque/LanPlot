@@ -4,6 +4,7 @@
     <list default="true" id="8a13df6e-658b-49f7-b854-cf5db700b9f1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/FourierTransform.py" afterPath="$PROJECT_DIR$/FourierTransform.py" />
+      <change beforePath="$PROJECT_DIR$/lex.py" afterPath="$PROJECT_DIR$/lex.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="lex.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lex.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1215">
-              <caret line="81" column="24" lean-forward="false" selection-start-line="81" selection-start-column="24" selection-end-line="81" selection-end-column="24" />
+            <state relative-caret-position="-1588">
+              <caret line="24" column="20" lean-forward="false" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -26,25 +27,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Fourier Series.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Fourier Series.py">
+      <file leaf-file-name="parser.out" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/parser.out">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-98">
+            <state relative-caret-position="-314">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FourierTransform.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FourierTransform.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FourierTransform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="37" column="13" lean-forward="false" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+            <state relative-caret-position="0">
+              <caret line="0" column="29" lean-forward="false" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Fourier Series.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Fourier Series.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <element signature="e#0#29#0" expanded="true" />
+                <element signature="e#0#18#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -77,9 +86,9 @@
         <option value="$PROJECT_DIR$/d3/de.v3.js" />
         <option value="$PROJECT_DIR$/d3/index.html" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/FourierTransform.py" />
+        <option value="$PROJECT_DIR$/FourierTransform.py" />
         <option value="$PROJECT_DIR$/lex.py" />
-        <option value="$PROJECT_DIR$/FourierTransform.py" />
-        <option value="$PROJECT_DIR$/FourierTransform.py" />
       </list>
     </option>
   </component>
@@ -358,7 +367,21 @@
       <option name="project" value="LOCAL" />
       <updated>1526361973303</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fixing FourierTransform class aesthetically">
+      <created>1526362258355</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1526362258355</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added sin and exponential support">
+      <created>1526362572004</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1526362572004</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -400,7 +423,9 @@
     <MESSAGE value="plot exprname added featured completed" />
     <MESSAGE value="deleting some comments" />
     <MESSAGE value="fixing some tokens" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixing some tokens" />
+    <MESSAGE value="fixing FourierTransform class aesthetically" />
+    <MESSAGE value="added sin and exponential support" />
+    <option name="LAST_COMMIT_MESSAGE" value="added sin and exponential support" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -431,9 +456,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="4" lean-forward="false" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -494,7 +517,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/parser.out">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="-314">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -502,7 +525,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Fourier Series.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-98">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -510,22 +533,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lex.py">
+    <entry file="file://$PROJECT_DIR$/FourierTransform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1215">
-          <caret line="81" column="24" lean-forward="false" selection-start-line="81" selection-start-column="24" selection-end-line="81" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="0">
+          <caret line="0" column="29" lean-forward="false" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/FourierTransform.py">
+    <entry file="file://$PROJECT_DIR$/lex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="37" column="13" lean-forward="false" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        <state relative-caret-position="-1588">
+          <caret line="24" column="20" lean-forward="false" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -22,7 +22,7 @@ tokens = ('PLOT',
           'SIN',
           'COS',
           'EXP',
-          'PULSE',
+          'HEAVISIDE',
           'PI',
           'VART',
         )
@@ -38,7 +38,7 @@ functions = {
             'cos': 'COS',
             'sin': 'SIN',
             'exp': 'EXP',
-            'pulse': 'PULSE'
+            'heaviside': 'HEAVISIDE'
 }
 
 # Regular expression rules for simple tokens
@@ -53,6 +53,7 @@ t_PLOT = r'(?i)plot'
 t_COS = r'(?i)cos'
 t_SIN = r'(?i)sin'
 t_EXP = r'(?i)exp'
+t_HEAVISIDE = r'(?i)heaviside'
 t_PI = r'(?i)pi'
 t_FOURIERTRANSFORM = r'(?i)fouriertransform'
 t_PULSE = r'(?i)pulse'
@@ -79,7 +80,7 @@ def t_EXPRNAME(t):
         t.type = functions.get(t.value,'ID')
     if t.value in 'exp':
         t.type = functions.get(t.value,'ID')
-    if t.value in 'pulse':
+    if t.value in 'heaviside':
         t.type = functions.get(t.value, 'ID')
     if t.value in 'pi':
         t.type = reserved.get(t.value,'ID')
