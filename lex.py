@@ -74,7 +74,6 @@ def t_NUMBER(t):
     t.value = int(t.value)
     return t
 
-
 def t_EXPRNAME(t):
     r'(([A-Za-z]+[0-9]+)|([A-Za-z][A-Za-z]+[0-9]*))+'
     if t.value in 'plot':
@@ -226,8 +225,8 @@ def p_expression_sin(p):
     p[0] = p[1] + '(' + p[3] + ')'
 
 def p_expression_exp(p):
-    'expression : EXP EXPONENT LPARENT expression RPARENT'
-    p[0] = p[1] + '^' + '(' + p[4] + ')'
+    'expression : EXP LPARENT expression RPARENT'
+    p[0] = p[1]  + '(' + p[3] + ')'
 
 def p_expression_cos_amplitude(p):
     'expression : term COS LPARENT expression RPARENT'

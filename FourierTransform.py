@@ -1,7 +1,7 @@
 from scipy.fftpack import fft
 import matplotlib.pyplot as plt
-from numpy import cos,linspace,pi,abs,sin,heaviside
-from math import exp
+from numpy import cos,linspace,pi,abs,sin,heaviside,exp
+
 
 class FourierTransform(object):
    def __init__(self, equation, number_samples):
