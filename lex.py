@@ -176,21 +176,21 @@ def p_function1(p):
     pol = FourierTransform(p[3], int(p[5])).computefft()
     p[0] = pol
 
-def p_function7(p):
+def p_function2(p):
     'function : PLOT FOURIERTRANSFORM exprname'
     equation, number_pointsamples = names[p[3]].split(',')
     pol = FourierTransform(equation, int(number_pointsamples)).compute()
     # print pol
     p[0] = pol
 
-def p_function6(p):
+def p_function3(p):
     'function : PLOT FOURIERTRANSFORM LPARENT expression RPARENT'
     p[0] = str(p[1]) + '(' + str(p[3]) + ')'
     pol = FourierTransform(p[3]).compute()
     #print pol
     p[0] = pol
 
-def p_function3(p):
+def p_function4(p):
     'function : PLOT exprname'
     p[0] = plotfft(names[p[2]])
 
