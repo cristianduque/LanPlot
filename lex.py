@@ -2,6 +2,7 @@ import ply.lex as lex
 # import FourierTransform
 import numpy as np
 from FourierTransform import FourierTransform
+from FourierTransform import plotfft
 
 # list of tokens names
 
@@ -125,6 +126,10 @@ def p_langfunctions1(p):
     'langfunction : plot'
     p[0] = str(p[1])
 
+def p_langfunctions(p):
+    'langfunction : fouriertransform'
+    p[0] = str(p[1])
+
 def p_langfunctions1(p):
     'langfunction : function'
     p[0] = str(p[1])
@@ -135,8 +140,8 @@ def p_langfunctions2(p):
 
 #############FOURIER TRANSFORM###############
 def p_fouriertransform(p):
-    'fouriertransform : expression COMMA factor'
-    p[0] = str(p[1]) + str(p[3])
+    'fouriertransform : exprname expression'
+    p[0] = str(p[1]) + str(p[2])
 
 
 #############EXPRESSION NAME###############   #OK
@@ -144,10 +149,10 @@ def p_exprname(p):
     'exprname : EXPRNAME'
     p[0] = str(p[1])
 
-# def p_exprname1(p):
-#     'exprname : EXPRNAME EQUALS function'
-#     names[p[1]] = p[3]
-#     p[0] = p[1]
+def p_exprname1(p):
+    'exprname : EXPRNAME EQUALS function'
+    names[p[1]] = p[3]
+    p[0] = p[1]
 
 def p_exprname2(p):
     'exprname : EXPRNAME EQUALS expression COMMA expression'
@@ -166,6 +171,11 @@ def p_function(p):
     #print pol
     p[0] = pol
 
+def p_function1(p):
+    'function : FOURIERTRANSFORM LPARENT expression COMMA expression RPARENT'
+    pol = FourierTransform(p[3], int(p[5])).computefft()
+    p[0] = pol
+
 def p_function7(p):
     'function : PLOT FOURIERTRANSFORM exprname'
     equation, number_pointsamples = names[p[3]].split(',')
@@ -180,6 +190,9 @@ def p_function6(p):
     #print pol
     p[0] = pol
 
+def p_function3(p):
+    'function : PLOT exprname'
+    p[0] = plotfft(names[p[2]])
 
 
 ############EXPRESSION###############   #OK
@@ -187,8 +200,16 @@ def p_expression_plus(p):
     'expression : expression PLUS term'
     p[0] = str(p[1]) + '+' + str(p[3])
 
+def p_expression_plus_expression(p):
+    'expression : expression PLUS expression'
+    p[0] = str(p[1]) + '+' + str(p[3])
+
 def p_expression_minus(p):
     'expression : expression MINUS term'
+    p[0] = str(p[1]) + '-' + str(p[3])
+
+def p_expression_minus_expression(p):
+    'expression : expression MINUS expression'
     p[0] = str(p[1]) + '-' + str(p[3])
 
 def p_expression_cos(p):
@@ -197,31 +218,39 @@ def p_expression_cos(p):
 
 def p_expression_sin(p):
     'expression : SIN LPARENT expression RPARENT'
-    p[0] = p[1](p[3])
+    p[0] = p[1] + '(' + p[3] + ')'
 
 def p_expression_exp(p):
     'expression : EXP LPARENT expression RPARENT'
-    p[0] = p[1](p[3])
+    p[0] = p[1] + '(' + p[3] + ')'
 
 def p_expression_cos_amplitude(p):
     'expression : term COS LPARENT expression RPARENT'
-    p[0] = p[1]*(p[2](p[4]))
+    p[0] = p[1] * p[2] + '(' + p[4] + ')'
 
 def p_expression_sin_amplitude(p):
     'expression : term SIN LPARENT expression RPARENT'
-    p[0] = p[1]*(p[2](p[4]))
+    p[0] = p[1] * p[2] + '(' + p[4] + ')'
 
 def p_expression_exp_amplitude(p):
     'expression : term EXP LPARENT expression RPARENT'
-    p[0] = p[1]*(p[2](p[4]))
+    p[0] = p[1] * p[2] + '(' + p[4] + ')'
 
 
 def p_expression_times(p):
     'expression : expression TIMES term'
     p[0] = str(p[1]) + '*' + str(p[3])
 
+def p_expression_times_expression(p):
+    'expression : expression TIMES expression'
+    p[0] = str(p[1]) + '*' + str(p[3])
+
 def p_expression_divide(p):
     'expression : expression DIVIDE term'
+    p[0] = str(p[1]) + '/' + str(p[3])
+
+def p_expression_divide_expression(p):
+    'expression : expression DIVIDE expression'
     p[0] = str(p[1]) + '/' + str(p[3])
 
 def p_expression_term(p):
@@ -269,7 +298,7 @@ parser = yacc.yacc()
 
 while True:
     try:
-        s = input('(LanPlot) > ')   # use input() on Python 3
+        s = input('(LanPlot) > ')
     except EOFError:
         break
     result = parser.parse(s)

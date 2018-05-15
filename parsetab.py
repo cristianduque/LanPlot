@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMA COS DIVIDE EQUALS EXP EXPONENT EXPRNAME FOURIERTRANSFORM LPARENT MINUS NUMBER PI PLOT PLUS PULSE QUOTATION RPARENT SHOWTEXT SIN TIMES VARTlangfunction : functionlangfunction : exprnamefouriertransform : expression COMMA factorexprname : EXPRNAMEexprname : EXPRNAME EQUALS expression COMMA expressionexprname : EXPRNAME EQUALS EXPRNAMEfunction : PLOT FOURIERTRANSFORM expression COMMA expressionfunction : PLOT FOURIERTRANSFORM exprnamefunction : PLOT FOURIERTRANSFORM LPARENT expression RPARENTexpression : expression PLUS termexpression : expression MINUS termexpression : COS LPARENT expression RPARENTexpression : SIN LPARENT expression RPARENTexpression : EXP LPARENT expression RPARENTexpression : term COS LPARENT expression RPARENTexpression : term SIN LPARENT expression RPARENTexpression : term EXP LPARENT expression RPARENTexpression : expression TIMES termexpression : expression DIVIDE termexpression : termterm : factor variableterm : variable EXPONENT factorterm : variableterm : factorfactor : NUMBERfactor : PIvariable : VART'
+_lr_signature = 'COMMA COS DIVIDE EQUALS EXP EXPONENT EXPRNAME FOURIERTRANSFORM LPARENT MINUS NUMBER PI PLOT PLUS PULSE RPARENT SIN TIMES VARTlangfunction : fouriertransformlangfunction : functionlangfunction : exprnamefouriertransform : exprname expressionexprname : EXPRNAMEexprname : EXPRNAME EQUALS functionexprname : EXPRNAME EQUALS expression COMMA expressionexprname : EXPRNAME EQUALS EXPRNAMEfunction : PLOT FOURIERTRANSFORM expression COMMA expressionfunction : FOURIERTRANSFORM LPARENT expression COMMA expression RPARENTfunction : PLOT FOURIERTRANSFORM exprnamefunction : PLOT FOURIERTRANSFORM LPARENT expression RPARENTfunction : PLOT exprnameexpression : expression PLUS termexpression : expression PLUS expressionexpression : expression MINUS termexpression : expression MINUS expressionexpression : COS LPARENT expression RPARENTexpression : SIN LPARENT expression RPARENTexpression : EXP LPARENT expression RPARENTexpression : term COS LPARENT expression RPARENTexpression : term SIN LPARENT expression RPARENTexpression : term EXP LPARENT expression RPARENTexpression : expression TIMES termexpression : expression TIMES expressionexpression : expression DIVIDE termexpression : expression DIVIDE expressionexpression : termterm : factor variableterm : variable EXPONENT factorterm : variableterm : factorfactor : NUMBERfactor : PIvariable : VART'
     
-_lr_action_items = {'PLOT':([0,],[4,]),'EXPRNAME':([0,6,7,],[5,5,20,]),'$end':([1,2,3,5,9,11,15,16,17,18,19,20,34,37,38,39,40,41,42,49,50,54,55,56,57,58,59,],[0,-1,-2,-4,-8,-20,-24,-23,-25,-26,-27,-6,-21,-7,-10,-11,-18,-19,-9,-22,-5,-12,-13,-14,-15,-16,-17,]),'FOURIERTRANSFORM':([4,],[6,]),'EQUALS':([5,],[7,]),'LPARENT':([6,12,13,14,28,29,30,],[10,31,32,33,43,44,45,]),'COS':([6,7,10,11,15,16,17,18,19,22,31,32,33,34,36,43,44,45,49,],[12,12,12,28,-24,-23,-25,-26,-27,12,12,12,12,-21,12,12,12,12,-22,]),'SIN':([6,7,10,11,15,16,17,18,19,22,31,32,33,34,36,43,44,45,49,],[13,13,13,29,-24,-23,-25,-26,-27,13,13,13,13,-21,13,13,13,13,-22,]),'EXP':([6,7,10,11,15,16,17,18,19,22,31,32,33,34,36,43,44,45,49,],[14,14,14,30,-24,-23,-25,-26,-27,14,14,14,14,-21,14,14,14,14,-22,]),'NUMBER':([6,7,10,22,23,24,25,26,31,32,33,35,36,43,44,45,],[17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,]),'PI':([6,7,10,22,23,24,25,26,31,32,33,35,36,43,44,45,],[18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,]),'VART':([6,7,10,15,17,18,22,23,24,25,26,31,32,33,36,43,44,45,],[19,19,19,19,-25,-26,19,19,19,19,19,19,19,19,19,19,19,19,]),'COMMA':([8,11,15,16,17,18,19,21,34,38,39,40,41,49,54,55,56,57,58,59,],[22,-20,-24,-23,-25,-26,-27,36,-21,-10,-11,-18,-19,-22,-12,-13,-14,-15,-16,-17,]),'PLUS':([8,11,15,16,17,18,19,21,27,34,37,38,39,40,41,46,47,48,49,50,51,52,53,54,55,56,57,58,59,],[23,-20,-24,-23,-25,-26,-27,23,23,-21,23,-10,-11,-18,-19,23,23,23,-22,23,23,23,23,-12,-13,-14,-15,-16,-17,]),'MINUS':([8,11,15,16,17,18,19,21,27,34,37,38,39,40,41,46,47,48,49,50,51,52,53,54,55,56,57,58,59,],[24,-20,-24,-23,-25,-26,-27,24,24,-21,24,-10,-11,-18,-19,24,24,24,-22,24,24,24,24,-12,-13,-14,-15,-16,-17,]),'TIMES':([8,11,15,16,17,18,19,21,27,34,37,38,39,40,41,46,47,48,49,50,51,52,53,54,55,56,57,58,59,],[25,-20,-24,-23,-25,-26,-27,25,25,-21,25,-10,-11,-18,-19,25,25,25,-22,25,25,25,25,-12,-13,-14,-15,-16,-17,]),'DIVIDE':([8,11,15,16,17,18,19,21,27,34,37,38,39,40,41,46,47,48,49,50,51,52,53,54,55,56,57,58,59,],[26,-20,-24,-23,-25,-26,-27,26,26,-21,26,-10,-11,-18,-19,26,26,26,-22,26,26,26,26,-12,-13,-14,-15,-16,-17,]),'RPARENT':([11,15,16,17,18,19,27,34,38,39,40,41,46,47,48,49,51,52,53,54,55,56,57,58,59,],[-20,-24,-23,-25,-26,-27,42,-21,-10,-11,-18,-19,54,55,56,-22,57,58,59,-12,-13,-14,-15,-16,-17,]),'EXPONENT':([16,19,],[35,-27,]),}
+_lr_action_items = {'PLOT':([0,21,],[5,5,]),'FOURIERTRANSFORM':([0,5,21,],[6,18,6,]),'EXPRNAME':([0,5,18,21,],[7,7,7,38,]),'$end':([1,2,3,4,7,8,9,13,14,15,16,17,19,32,35,38,39,41,42,43,44,45,46,47,48,55,63,64,65,66,67,69,70,71,72,73,],[0,-1,-2,-3,-5,-4,-28,-32,-31,-33,-34,-35,-13,-29,-11,-8,-6,-15,-14,-17,-16,-25,-24,-27,-26,-30,-18,-19,-20,-9,-12,-7,-21,-22,-23,-10,]),'COS':([4,7,9,13,14,15,16,17,18,19,20,21,22,23,24,25,29,30,31,32,35,36,38,39,41,42,43,44,45,46,47,48,49,50,51,55,56,58,59,63,64,65,66,67,69,70,71,72,73,],[10,-5,26,-32,-31,-33,-34,-35,10,-13,10,10,10,10,10,10,10,10,10,-29,-11,10,-8,-6,-15,26,-17,26,-25,26,-27,26,10,10,10,-30,10,10,10,-18,-19,-20,-9,-12,-7,-21,-22,-23,-10,]),'SIN':([4,7,9,13,14,15,16,17,18,19,20,21,22,23,24,25,29,30,31,32,35,36,38,39,41,42,43,44,45,46,47,48,49,50,51,55,56,58,59,63,64,65,66,67,69,70,71,72,73,],[11,-5,27,-32,-31,-33,-34,-35,11,-13,11,11,11,11,11,11,11,11,11,-29,-11,11,-8,-6,-15,27,-17,27,-25,27,-27,27,11,11,11,-30,11,11,11,-18,-19,-20,-9,-12,-7,-21,-22,-23,-10,]),'EXP':([4,7,9,13,14,15,16,17,18,19,20,21,22,23,24,25,29,30,31,32,35,36,38,39,41,42,43,44,45,46,47,48,49,50,51,55,56,58,59,63,64,65,66,67,69,70,71,72,73,],[12,-5,28,-32,-31,-33,-34,-35,12,-13,12,12,12,12,12,12,12,12,12,-29,-11,12,-8,-6,-15,28,-17,28,-25,28,-27,28,12,12,12,-30,12,12,12,-18,-19,-20,-9,-12,-7,-21,-22,-23,-10,]),'NUMBER':([4,7,9,13,14,15,16,17,18,19,20,21,22,23,24,25,29,30,31,32,33,35,36,38,39,41,42,43,44,45,46,47,48,49,50,51,55,56,58,59,63,64,65,66,67,69,70,71,72,73,],[15,-5,-28,-32,-31,-33,-34,-35,15,-13,15,15,15,15,15,15,15,15,15,-29,15,-11,15,-8,-6,-15,-14,-17,-16,-25,-24,-27,-26,15,15,15,-30,15,15,15,-18,-19,-20,-9,-12,-7,-21,-22,-23,-10,]),'PI':([4,7,9,13,14,15,16,17,18,19,20,21,22,23,24,25,29,30,31,32,33,35,36,38,39,41,42,43,44,45,46,47,48,49,50,51,55,56,58,59,63,64,65,66,67,69,70,71,72,73,],[16,-5,-28,-32,-31,-33,-34,-35,16,-13,16,16,16,16,16,16,16,16,16,-29,16,-11,16,-8,-6,-15,-14,-17,-16,-25,-24,-27,-26,16,16,16,-30,16,16,16,-18,-19,-20,-9,-12,-7,-21,-22,-23,-10,]),'VART':([4,7,9,13,14,15,16,17,18,19,20,21,22,23,24,25,29,30,31,32,35,36,38,39,41,42,43,44,45,46,47,48,49,50,51,55,56,58,59,63,64,65,66,67,69,70,71,72,73,],[17,-5,-28,17,-31,-33,-34,-35,17,-13,17,17,17,17,17,17,17,17,17,-29,-11,17,-8,-6,-15,-14,-17,-16,-25,-24,-27,-26,17,17,17,-30,17,17,17,-18,-19,-20,-9,-12,-7,-21,-22,-23,-10,]),'LPARENT':([6,10,11,12,18,26,27,28,],[20,29,30,31,36,49,50,51,]),'EQUALS':([7,],[21,]),'PLUS':([8,9,13,14,15,16,17,32,34,37,40,41,42,43,44,45,46,47,48,52,53,54,55,57,60,61,62,63,64,65,66,68,69,70,71,72,],[22,-28,-32,-31,-33,-34,-35,-29,22,22,22,22,-14,22,-16,22,-24,22,-26,22,22,22,-30,22,22,22,22,-18,-19,-20,22,22,22,-21,-22,-23,]),'MINUS':([8,9,13,14,15,16,17,32,34,37,40,41,42,43,44,45,46,47,48,52,53,54,55,57,60,61,62,63,64,65,66,68,69,70,71,72,],[23,-28,-32,-31,-33,-34,-35,-29,23,23,23,23,-14,23,-16,23,-24,23,-26,23,23,23,-30,23,23,23,23,-18,-19,-20,23,23,23,-21,-22,-23,]),'TIMES':([8,9,13,14,15,16,17,32,34,37,40,41,42,43,44,45,46,47,48,52,53,54,55,57,60,61,62,63,64,65,66,68,69,70,71,72,],[24,-28,-32,-31,-33,-34,-35,-29,24,24,24,24,-14,24,-16,24,-24,24,-26,24,24,24,-30,24,24,24,24,-18,-19,-20,24,24,24,-21,-22,-23,]),'DIVIDE':([8,9,13,14,15,16,17,32,34,37,40,41,42,43,44,45,46,47,48,52,53,54,55,57,60,61,62,63,64,65,66,68,69,70,71,72,],[25,-28,-32,-31,-33,-34,-35,-29,25,25,25,25,-14,25,-16,25,-24,25,-26,25,25,25,-30,25,25,25,25,-18,-19,-20,25,25,25,-21,-22,-23,]),'COMMA':([9,13,14,15,16,17,32,34,37,40,41,42,43,44,45,46,47,48,55,63,64,65,70,71,72,],[-28,-32,-31,-33,-34,-35,-29,56,58,59,-15,-14,-17,-16,-25,-24,-27,-26,-30,-18,-19,-20,-21,-22,-23,]),'RPARENT':([9,13,14,15,16,17,32,41,42,43,44,45,46,47,48,52,53,54,55,57,60,61,62,63,64,65,68,70,71,72,],[-28,-32,-31,-33,-34,-35,-29,-15,-14,-17,-16,-25,-24,-27,-26,63,64,65,-30,67,70,71,72,-18,-19,-20,73,-21,-22,-23,]),'EXPONENT':([14,17,],[33,-35,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'langfunction':([0,],[1,]),'function':([0,],[2,]),'exprname':([0,6,],[3,9,]),'expression':([6,7,10,22,31,32,33,36,43,44,45,],[8,21,27,37,46,47,48,50,51,52,53,]),'term':([6,7,10,22,23,24,25,26,31,32,33,36,43,44,45,],[11,11,11,11,38,39,40,41,11,11,11,11,11,11,11,]),'factor':([6,7,10,22,23,24,25,26,31,32,33,35,36,43,44,45,],[15,15,15,15,15,15,15,15,15,15,15,49,15,15,15,15,]),'variable':([6,7,10,15,22,23,24,25,26,31,32,33,36,43,44,45,],[16,16,16,34,16,16,16,16,16,16,16,16,16,16,16,16,]),}
+_lr_goto_items = {'langfunction':([0,],[1,]),'fouriertransform':([0,],[2,]),'function':([0,21,],[3,39,]),'exprname':([0,5,18,],[4,19,35,]),'expression':([4,18,20,21,22,23,24,25,29,30,31,36,49,50,51,56,58,59,],[8,34,37,40,41,43,45,47,52,53,54,57,60,61,62,66,68,69,]),'term':([4,18,20,21,22,23,24,25,29,30,31,36,49,50,51,56,58,59,],[9,9,9,9,42,44,46,48,9,9,9,9,9,9,9,9,9,9,]),'factor':([4,18,20,21,22,23,24,25,29,30,31,33,36,49,50,51,56,58,59,],[13,13,13,13,13,13,13,13,13,13,13,55,13,13,13,13,13,13,13,]),'variable':([4,13,18,20,21,22,23,24,25,29,30,31,36,49,50,51,56,58,59,],[14,32,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,31 +27,39 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> langfunction","S'",1,None,None,None),
-  ('langfunction -> function','langfunction',1,'p_langfunctions1','lex.py',136),
-  ('langfunction -> exprname','langfunction',1,'p_langfunctions2','lex.py',140),
-  ('fouriertransform -> expression COMMA factor','fouriertransform',3,'p_fouriertransform','lex.py',145),
-  ('exprname -> EXPRNAME','exprname',1,'p_exprname','lex.py',151),
-  ('exprname -> EXPRNAME EQUALS expression COMMA expression','exprname',5,'p_exprname2','lex.py',160),
-  ('exprname -> EXPRNAME EQUALS EXPRNAME','exprname',3,'p_exprname3','lex.py',165),
-  ('function -> PLOT FOURIERTRANSFORM expression COMMA expression','function',5,'p_function','lex.py',171),
-  ('function -> PLOT FOURIERTRANSFORM exprname','function',3,'p_function7','lex.py',177),
-  ('function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT','function',5,'p_function6','lex.py',183),
-  ('expression -> expression PLUS term','expression',3,'p_expression_plus','lex.py',221),
-  ('expression -> expression MINUS term','expression',3,'p_expression_minus','lex.py',225),
-  ('expression -> COS LPARENT expression RPARENT','expression',4,'p_expression_cos','lex.py',229),
-  ('expression -> SIN LPARENT expression RPARENT','expression',4,'p_expression_sin','lex.py',233),
-  ('expression -> EXP LPARENT expression RPARENT','expression',4,'p_expression_exp','lex.py',237),
-  ('expression -> term COS LPARENT expression RPARENT','expression',5,'p_expression_cos_amplitude','lex.py',241),
-  ('expression -> term SIN LPARENT expression RPARENT','expression',5,'p_expression_sin_amplitude','lex.py',245),
-  ('expression -> term EXP LPARENT expression RPARENT','expression',5,'p_expression_exp_amplitude','lex.py',249),
-  ('expression -> expression TIMES term','expression',3,'p_expression_times','lex.py',254),
-  ('expression -> expression DIVIDE term','expression',3,'p_expression_divide','lex.py',258),
-  ('expression -> term','expression',1,'p_expression_term','lex.py',262),
-  ('term -> factor variable','term',2,'p_term_times','lex.py',267),
-  ('term -> variable EXPONENT factor','term',3,'p_term_var_exp','lex.py',271),
-  ('term -> variable','term',1,'p_term_var','lex.py',275),
-  ('term -> factor','term',1,'p_term_fac','lex.py',279),
-  ('factor -> NUMBER','factor',1,'p_factor_num','lex.py',284),
-  ('factor -> PI','factor',1,'p_factor_pi','lex.py',288),
-  ('variable -> VART','variable',1,'p_variable_t','lex.py',305),
+  ('langfunction -> fouriertransform','langfunction',1,'p_langfunctions','lex.py',130),
+  ('langfunction -> function','langfunction',1,'p_langfunctions1','lex.py',134),
+  ('langfunction -> exprname','langfunction',1,'p_langfunctions2','lex.py',138),
+  ('fouriertransform -> exprname expression','fouriertransform',2,'p_fouriertransform','lex.py',143),
+  ('exprname -> EXPRNAME','exprname',1,'p_exprname','lex.py',149),
+  ('exprname -> EXPRNAME EQUALS function','exprname',3,'p_exprname1','lex.py',153),
+  ('exprname -> EXPRNAME EQUALS expression COMMA expression','exprname',5,'p_exprname2','lex.py',158),
+  ('exprname -> EXPRNAME EQUALS EXPRNAME','exprname',3,'p_exprname3','lex.py',163),
+  ('function -> PLOT FOURIERTRANSFORM expression COMMA expression','function',5,'p_function','lex.py',169),
+  ('function -> FOURIERTRANSFORM LPARENT expression COMMA expression RPARENT','function',6,'p_function1','lex.py',175),
+  ('function -> PLOT FOURIERTRANSFORM exprname','function',3,'p_function7','lex.py',180),
+  ('function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT','function',5,'p_function6','lex.py',187),
+  ('function -> PLOT exprname','function',2,'p_function3','lex.py',194),
+  ('expression -> expression PLUS term','expression',3,'p_expression_plus','lex.py',200),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_plus_expression','lex.py',204),
+  ('expression -> expression MINUS term','expression',3,'p_expression_minus','lex.py',208),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_minus_expression','lex.py',212),
+  ('expression -> COS LPARENT expression RPARENT','expression',4,'p_expression_cos','lex.py',216),
+  ('expression -> SIN LPARENT expression RPARENT','expression',4,'p_expression_sin','lex.py',220),
+  ('expression -> EXP LPARENT expression RPARENT','expression',4,'p_expression_exp','lex.py',224),
+  ('expression -> term COS LPARENT expression RPARENT','expression',5,'p_expression_cos_amplitude','lex.py',228),
+  ('expression -> term SIN LPARENT expression RPARENT','expression',5,'p_expression_sin_amplitude','lex.py',232),
+  ('expression -> term EXP LPARENT expression RPARENT','expression',5,'p_expression_exp_amplitude','lex.py',236),
+  ('expression -> expression TIMES term','expression',3,'p_expression_times','lex.py',241),
+  ('expression -> expression TIMES expression','expression',3,'p_expression_times_expression','lex.py',245),
+  ('expression -> expression DIVIDE term','expression',3,'p_expression_divide','lex.py',249),
+  ('expression -> expression DIVIDE expression','expression',3,'p_expression_divide_expression','lex.py',253),
+  ('expression -> term','expression',1,'p_expression_term','lex.py',257),
+  ('term -> factor variable','term',2,'p_term_times','lex.py',262),
+  ('term -> variable EXPONENT factor','term',3,'p_term_var_exp','lex.py',266),
+  ('term -> variable','term',1,'p_term_var','lex.py',270),
+  ('term -> factor','term',1,'p_term_fac','lex.py',274),
+  ('factor -> NUMBER','factor',1,'p_factor_num','lex.py',279),
+  ('factor -> PI','factor',1,'p_factor_pi','lex.py',283),
+  ('variable -> VART','variable',1,'p_variable_t','lex.py',288),
 ]

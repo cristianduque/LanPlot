@@ -13,7 +13,7 @@ class FourierTransform(object):
       t = linspace(0.0, N * T, N)
 
       y = eval(self.equation)
-      print(y)
+      # print(y)
 
       Xf = fft(y)
 
@@ -26,6 +26,27 @@ class FourierTransform(object):
       plt.grid()
       plt.show()
 
+   def computefft(self):
+       N = self.number_samples
+       T = 1 / N
+       t = linspace(0.0, N * T, N)
 
-# print(FourierTransform('cos(2*pi*50*t)', 600).compute())
+       y = eval(self.equation)
+       print(y)
+
+       Xf = fft(y)
+       return Xf
+
+def plotfft(equation):
+    N = 1000
+    T = 1 / N
+
+    xt = linspace(0.0, 1.0 / (2.0 * T), N // 2)
+
+    plt.title("Fourier Transform Graph")
+    plt.xlabel("Frequency")
+    plt.ylabel("Fourier Equation")
+    plt.plot(xt, 2.0 / N * (abs(equation[0:N // 2])))
+    plt.grid()
+    plt.show()
 
