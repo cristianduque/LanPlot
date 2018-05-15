@@ -9,20 +9,20 @@ class FourierTransform(object):
       self.number_samples = number_samples
 
    def compute(self):
-      N = self.number_samples
-      T = 1 / N
-      t = linspace(0.0, N * T, N)
+      N = self.number_samples # Number of samplepoints
+      T = 1 / N    # sample spacing
+      t = linspace(0.0, N * T, N)  #time domain
 
       transform_equation = eval(self.equation)
 
-      fourier_equation = fft(transform_equation)
+      fourier_equation = fft(transform_equation)  # fft computing and normalization
 
       frequency_domain = linspace(0.0, 1.0 / (2.0 * T), N // 2)
 
       plt.title("Fourier Transform Graph")
       plt.xlabel("Frequency")
       plt.ylabel("Fourier Equation")
-      plt.plot(frequency_domain, 2.0 / N * (abs(fourier_equation[0:N // 2])))
+      plt.plot(frequency_domain, 2.0 / N * (abs(fourier_equation[0:N // 2])))  # one side frequency range and plotting spectrum
       plt.grid()
       plt.show()
 
