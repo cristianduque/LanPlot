@@ -12,41 +12,35 @@ class FourierTransform(object):
       T = 1 / N
       t = linspace(0.0, N * T, N)
 
-      y = eval(self.equation)
-      # print(y)
+      transform_equation = eval(self.equation)
 
-      Xf = fft(y)
+      fourier_equation = fft(transform_equation)
 
-      xt = linspace(0.0, 1.0 / (2.0 * T), N // 2)
+      frequency_domain = linspace(0.0, 1.0 / (2.0 * T), N // 2)
 
       plt.title("Fourier Transform Graph")
       plt.xlabel("Frequency")
       plt.ylabel("Fourier Equation")
-      plt.plot(xt, 2.0 / N * (abs(Xf[0:N // 2])))
+      plt.plot(frequency_domain, 2.0 / N * (abs(fourier_equation[0:N // 2])))
       plt.grid()
       plt.show()
 
    def computefft(self):
-       N = self.number_samples
-       T = 1 / N
-       t = linspace(0.0, N * T, N)
-
-       y = eval(self.equation)
-       print(y)
-
-       Xf = fft(y)
-       return Xf
+      N = self.number_samples
+      T = 1 / N
+      t = linspace(0.0, N * T, N)
+      transform_equation = eval(self.equation)
+      fourier_equation = fft(transform_equation)
+      return fourier_equation
 
 def plotfft(equation):
     N = 1000
     T = 1 / N
-
-    xt = linspace(0.0, 1.0 / (2.0 * T), N // 2)
-
+    frequency_domain = linspace(0.0, 1.0 / (2.0 * T), N // 2)
     plt.title("Fourier Transform Graph")
     plt.xlabel("Frequency")
     plt.ylabel("Fourier Equation")
-    plt.plot(xt, 2.0 / N * (abs(equation[0:N // 2])))
+    plt.plot(frequency_domain, 2.0 / N * (abs(equation[0:N // 2])))
     plt.grid()
     plt.show()
 
