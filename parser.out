@@ -2,7 +2,7 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    PULSE
+    HEAVISIDE
 
 Grammar
 
@@ -26,7 +26,7 @@ Rule 16    expression -> expression MINUS term
 Rule 17    expression -> expression MINUS expression
 Rule 18    expression -> COS LPARENT expression RPARENT
 Rule 19    expression -> SIN LPARENT expression RPARENT
-Rule 20    expression -> EXP LPARENT expression RPARENT
+Rule 20    expression -> EXP EXPONENT LPARENT expression RPARENT
 Rule 21    expression -> term COS LPARENT expression RPARENT
 Rule 22    expression -> term SIN LPARENT expression RPARENT
 Rule 23    expression -> term EXP LPARENT expression RPARENT
@@ -37,11 +37,13 @@ Rule 27    expression -> expression DIVIDE expression
 Rule 28    expression -> term
 Rule 29    term -> factor variable
 Rule 30    term -> variable EXPONENT factor
-Rule 31    term -> variable
-Rule 32    term -> factor
-Rule 33    factor -> NUMBER
-Rule 34    factor -> PI
-Rule 35    variable -> VART
+Rule 31    term -> EXP EXPONENT LPARENT expression RPARENT
+Rule 32    term -> variable
+Rule 33    term -> factor
+Rule 34    factor -> NUMBER
+Rule 35    factor -> FLOATNUMBER
+Rule 36    factor -> PI
+Rule 37    variable -> VART
 
 Terminals, with rules where they appear
 
@@ -49,33 +51,34 @@ COMMA                : 7 9 10
 COS                  : 18 21
 DIVIDE               : 26 27
 EQUALS               : 6 7 8
-EXP                  : 20 23
-EXPONENT             : 30
+EXP                  : 20 23 31
+EXPONENT             : 20 30 31
 EXPRNAME             : 5 6 7 8 8
+FLOATNUMBER          : 35
 FOURIERTRANSFORM     : 9 10 11 12
-LPARENT              : 10 12 18 19 20 21 22 23
+HEAVISIDE            : 
+LPARENT              : 10 12 18 19 20 21 22 23 31
 MINUS                : 16 17
-NUMBER               : 33
-PI                   : 34
+NUMBER               : 34
+PI                   : 36
 PLOT                 : 9 11 12 13
 PLUS                 : 14 15
-PULSE                : 
-RPARENT              : 10 12 18 19 20 21 22 23
+RPARENT              : 10 12 18 19 20 21 22 23 31
 SIN                  : 19 22
 TIMES                : 24 25
-VART                 : 35
+VART                 : 37
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 4 7 7 9 9 10 10 12 14 15 15 16 17 17 18 19 20 21 22 23 24 25 25 26 27 27
+expression           : 4 7 7 9 9 10 10 12 14 15 15 16 17 17 18 19 20 21 22 23 24 25 25 26 27 27 31
 exprname             : 3 4 11 13
-factor               : 29 30 32
+factor               : 29 30 33
 fouriertransform     : 1
 function             : 2 6
 langfunction         : 0
 term                 : 14 16 21 22 23 24 26 28
-variable             : 29 30 31
+variable             : 29 30 32
 
 Parsing method: LALR
 
@@ -135,7 +138,7 @@ state 4
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -146,19 +149,22 @@ state 4
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     $end            reduce using rule 3 (langfunction -> exprname .)
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
     expression                     shift and go to state 8
     term                           shift and go to state 9
@@ -176,16 +182,16 @@ state 5
     (7) exprname -> . EXPRNAME EQUALS expression COMMA expression
     (8) exprname -> . EXPRNAME EQUALS EXPRNAME
 
-    FOURIERTRANSFORM shift and go to state 18
+    FOURIERTRANSFORM shift and go to state 19
     EXPRNAME        shift and go to state 7
 
-    exprname                       shift and go to state 19
+    exprname                       shift and go to state 20
 
 state 6
 
     (10) function -> FOURIERTRANSFORM . LPARENT expression COMMA expression RPARENT
 
-    LPARENT         shift and go to state 20
+    LPARENT         shift and go to state 21
 
 
 state 7
@@ -199,10 +205,11 @@ state 7
     SIN             reduce using rule 5 (exprname -> EXPRNAME .)
     EXP             reduce using rule 5 (exprname -> EXPRNAME .)
     NUMBER          reduce using rule 5 (exprname -> EXPRNAME .)
+    FLOATNUMBER     reduce using rule 5 (exprname -> EXPRNAME .)
     PI              reduce using rule 5 (exprname -> EXPRNAME .)
     VART            reduce using rule 5 (exprname -> EXPRNAME .)
     $end            reduce using rule 5 (exprname -> EXPRNAME .)
-    EQUALS          shift and go to state 21
+    EQUALS          shift and go to state 22
 
 
 state 8
@@ -218,10 +225,10 @@ state 8
     (27) expression -> expression . DIVIDE expression
 
     $end            reduce using rule 4 (fouriertransform -> exprname expression .)
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
 state 9
@@ -234,9 +241,9 @@ state 9
   ! shift/reduce conflict for COS resolved as shift
   ! shift/reduce conflict for SIN resolved as shift
   ! shift/reduce conflict for EXP resolved as shift
-    COS             shift and go to state 26
-    SIN             shift and go to state 27
-    EXP             shift and go to state 28
+    COS             shift and go to state 27
+    SIN             shift and go to state 28
+    EXP             shift and go to state 29
     PLUS            reduce using rule 28 (expression -> term .)
     MINUS           reduce using rule 28 (expression -> term .)
     TIMES           reduce using rule 28 (expression -> term .)
@@ -245,6 +252,7 @@ state 9
     COMMA           reduce using rule 28 (expression -> term .)
     RPARENT         reduce using rule 28 (expression -> term .)
     NUMBER          reduce using rule 28 (expression -> term .)
+    FLOATNUMBER     reduce using rule 28 (expression -> term .)
     PI              reduce using rule 28 (expression -> term .)
     VART            reduce using rule 28 (expression -> term .)
 
@@ -257,128 +265,154 @@ state 10
 
     (18) expression -> COS . LPARENT expression RPARENT
 
-    LPARENT         shift and go to state 29
+    LPARENT         shift and go to state 30
 
 
 state 11
 
     (19) expression -> SIN . LPARENT expression RPARENT
 
-    LPARENT         shift and go to state 30
+    LPARENT         shift and go to state 31
 
 
 state 12
 
-    (20) expression -> EXP . LPARENT expression RPARENT
+    (20) expression -> EXP . EXPONENT LPARENT expression RPARENT
+    (31) term -> EXP . EXPONENT LPARENT expression RPARENT
 
-    LPARENT         shift and go to state 31
+    EXPONENT        shift and go to state 32
 
 
 state 13
 
     (29) term -> factor . variable
-    (32) term -> factor .
-    (35) variable -> . VART
+    (33) term -> factor .
+    (37) variable -> . VART
 
   ! shift/reduce conflict for VART resolved as shift
-    COS             reduce using rule 32 (term -> factor .)
-    SIN             reduce using rule 32 (term -> factor .)
-    EXP             reduce using rule 32 (term -> factor .)
-    PLUS            reduce using rule 32 (term -> factor .)
-    MINUS           reduce using rule 32 (term -> factor .)
-    TIMES           reduce using rule 32 (term -> factor .)
-    DIVIDE          reduce using rule 32 (term -> factor .)
-    $end            reduce using rule 32 (term -> factor .)
-    COMMA           reduce using rule 32 (term -> factor .)
-    RPARENT         reduce using rule 32 (term -> factor .)
-    NUMBER          reduce using rule 32 (term -> factor .)
-    PI              reduce using rule 32 (term -> factor .)
-    VART            shift and go to state 17
+    COS             reduce using rule 33 (term -> factor .)
+    SIN             reduce using rule 33 (term -> factor .)
+    EXP             reduce using rule 33 (term -> factor .)
+    PLUS            reduce using rule 33 (term -> factor .)
+    MINUS           reduce using rule 33 (term -> factor .)
+    TIMES           reduce using rule 33 (term -> factor .)
+    DIVIDE          reduce using rule 33 (term -> factor .)
+    $end            reduce using rule 33 (term -> factor .)
+    COMMA           reduce using rule 33 (term -> factor .)
+    RPARENT         reduce using rule 33 (term -> factor .)
+    NUMBER          reduce using rule 33 (term -> factor .)
+    FLOATNUMBER     reduce using rule 33 (term -> factor .)
+    PI              reduce using rule 33 (term -> factor .)
+    VART            shift and go to state 18
 
-  ! VART            [ reduce using rule 32 (term -> factor .) ]
+  ! VART            [ reduce using rule 33 (term -> factor .) ]
 
-    variable                       shift and go to state 32
+    variable                       shift and go to state 33
 
 state 14
 
     (30) term -> variable . EXPONENT factor
-    (31) term -> variable .
+    (32) term -> variable .
 
-    EXPONENT        shift and go to state 33
-    COS             reduce using rule 31 (term -> variable .)
-    SIN             reduce using rule 31 (term -> variable .)
-    EXP             reduce using rule 31 (term -> variable .)
-    PLUS            reduce using rule 31 (term -> variable .)
-    MINUS           reduce using rule 31 (term -> variable .)
-    TIMES           reduce using rule 31 (term -> variable .)
-    DIVIDE          reduce using rule 31 (term -> variable .)
-    $end            reduce using rule 31 (term -> variable .)
-    COMMA           reduce using rule 31 (term -> variable .)
-    RPARENT         reduce using rule 31 (term -> variable .)
-    NUMBER          reduce using rule 31 (term -> variable .)
-    PI              reduce using rule 31 (term -> variable .)
-    VART            reduce using rule 31 (term -> variable .)
+    EXPONENT        shift and go to state 34
+    COS             reduce using rule 32 (term -> variable .)
+    SIN             reduce using rule 32 (term -> variable .)
+    EXP             reduce using rule 32 (term -> variable .)
+    PLUS            reduce using rule 32 (term -> variable .)
+    MINUS           reduce using rule 32 (term -> variable .)
+    TIMES           reduce using rule 32 (term -> variable .)
+    DIVIDE          reduce using rule 32 (term -> variable .)
+    $end            reduce using rule 32 (term -> variable .)
+    COMMA           reduce using rule 32 (term -> variable .)
+    RPARENT         reduce using rule 32 (term -> variable .)
+    NUMBER          reduce using rule 32 (term -> variable .)
+    FLOATNUMBER     reduce using rule 32 (term -> variable .)
+    PI              reduce using rule 32 (term -> variable .)
+    VART            reduce using rule 32 (term -> variable .)
 
 
 state 15
 
-    (33) factor -> NUMBER .
+    (34) factor -> NUMBER .
 
-    VART            reduce using rule 33 (factor -> NUMBER .)
-    COS             reduce using rule 33 (factor -> NUMBER .)
-    SIN             reduce using rule 33 (factor -> NUMBER .)
-    EXP             reduce using rule 33 (factor -> NUMBER .)
-    PLUS            reduce using rule 33 (factor -> NUMBER .)
-    MINUS           reduce using rule 33 (factor -> NUMBER .)
-    TIMES           reduce using rule 33 (factor -> NUMBER .)
-    DIVIDE          reduce using rule 33 (factor -> NUMBER .)
-    $end            reduce using rule 33 (factor -> NUMBER .)
-    COMMA           reduce using rule 33 (factor -> NUMBER .)
-    RPARENT         reduce using rule 33 (factor -> NUMBER .)
-    NUMBER          reduce using rule 33 (factor -> NUMBER .)
-    PI              reduce using rule 33 (factor -> NUMBER .)
+    VART            reduce using rule 34 (factor -> NUMBER .)
+    COS             reduce using rule 34 (factor -> NUMBER .)
+    SIN             reduce using rule 34 (factor -> NUMBER .)
+    EXP             reduce using rule 34 (factor -> NUMBER .)
+    PLUS            reduce using rule 34 (factor -> NUMBER .)
+    MINUS           reduce using rule 34 (factor -> NUMBER .)
+    TIMES           reduce using rule 34 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 34 (factor -> NUMBER .)
+    $end            reduce using rule 34 (factor -> NUMBER .)
+    COMMA           reduce using rule 34 (factor -> NUMBER .)
+    RPARENT         reduce using rule 34 (factor -> NUMBER .)
+    NUMBER          reduce using rule 34 (factor -> NUMBER .)
+    FLOATNUMBER     reduce using rule 34 (factor -> NUMBER .)
+    PI              reduce using rule 34 (factor -> NUMBER .)
 
 
 state 16
 
-    (34) factor -> PI .
+    (35) factor -> FLOATNUMBER .
 
-    VART            reduce using rule 34 (factor -> PI .)
-    COS             reduce using rule 34 (factor -> PI .)
-    SIN             reduce using rule 34 (factor -> PI .)
-    EXP             reduce using rule 34 (factor -> PI .)
-    PLUS            reduce using rule 34 (factor -> PI .)
-    MINUS           reduce using rule 34 (factor -> PI .)
-    TIMES           reduce using rule 34 (factor -> PI .)
-    DIVIDE          reduce using rule 34 (factor -> PI .)
-    $end            reduce using rule 34 (factor -> PI .)
-    COMMA           reduce using rule 34 (factor -> PI .)
-    RPARENT         reduce using rule 34 (factor -> PI .)
-    NUMBER          reduce using rule 34 (factor -> PI .)
-    PI              reduce using rule 34 (factor -> PI .)
+    VART            reduce using rule 35 (factor -> FLOATNUMBER .)
+    COS             reduce using rule 35 (factor -> FLOATNUMBER .)
+    SIN             reduce using rule 35 (factor -> FLOATNUMBER .)
+    EXP             reduce using rule 35 (factor -> FLOATNUMBER .)
+    PLUS            reduce using rule 35 (factor -> FLOATNUMBER .)
+    MINUS           reduce using rule 35 (factor -> FLOATNUMBER .)
+    TIMES           reduce using rule 35 (factor -> FLOATNUMBER .)
+    DIVIDE          reduce using rule 35 (factor -> FLOATNUMBER .)
+    $end            reduce using rule 35 (factor -> FLOATNUMBER .)
+    COMMA           reduce using rule 35 (factor -> FLOATNUMBER .)
+    RPARENT         reduce using rule 35 (factor -> FLOATNUMBER .)
+    NUMBER          reduce using rule 35 (factor -> FLOATNUMBER .)
+    FLOATNUMBER     reduce using rule 35 (factor -> FLOATNUMBER .)
+    PI              reduce using rule 35 (factor -> FLOATNUMBER .)
 
 
 state 17
 
-    (35) variable -> VART .
+    (36) factor -> PI .
 
-    EXPONENT        reduce using rule 35 (variable -> VART .)
-    COS             reduce using rule 35 (variable -> VART .)
-    SIN             reduce using rule 35 (variable -> VART .)
-    EXP             reduce using rule 35 (variable -> VART .)
-    PLUS            reduce using rule 35 (variable -> VART .)
-    MINUS           reduce using rule 35 (variable -> VART .)
-    TIMES           reduce using rule 35 (variable -> VART .)
-    DIVIDE          reduce using rule 35 (variable -> VART .)
-    $end            reduce using rule 35 (variable -> VART .)
-    COMMA           reduce using rule 35 (variable -> VART .)
-    RPARENT         reduce using rule 35 (variable -> VART .)
-    NUMBER          reduce using rule 35 (variable -> VART .)
-    PI              reduce using rule 35 (variable -> VART .)
-    VART            reduce using rule 35 (variable -> VART .)
+    VART            reduce using rule 36 (factor -> PI .)
+    COS             reduce using rule 36 (factor -> PI .)
+    SIN             reduce using rule 36 (factor -> PI .)
+    EXP             reduce using rule 36 (factor -> PI .)
+    PLUS            reduce using rule 36 (factor -> PI .)
+    MINUS           reduce using rule 36 (factor -> PI .)
+    TIMES           reduce using rule 36 (factor -> PI .)
+    DIVIDE          reduce using rule 36 (factor -> PI .)
+    $end            reduce using rule 36 (factor -> PI .)
+    COMMA           reduce using rule 36 (factor -> PI .)
+    RPARENT         reduce using rule 36 (factor -> PI .)
+    NUMBER          reduce using rule 36 (factor -> PI .)
+    FLOATNUMBER     reduce using rule 36 (factor -> PI .)
+    PI              reduce using rule 36 (factor -> PI .)
 
 
 state 18
+
+    (37) variable -> VART .
+
+    EXPONENT        reduce using rule 37 (variable -> VART .)
+    COS             reduce using rule 37 (variable -> VART .)
+    SIN             reduce using rule 37 (variable -> VART .)
+    EXP             reduce using rule 37 (variable -> VART .)
+    PLUS            reduce using rule 37 (variable -> VART .)
+    MINUS           reduce using rule 37 (variable -> VART .)
+    TIMES           reduce using rule 37 (variable -> VART .)
+    DIVIDE          reduce using rule 37 (variable -> VART .)
+    $end            reduce using rule 37 (variable -> VART .)
+    COMMA           reduce using rule 37 (variable -> VART .)
+    RPARENT         reduce using rule 37 (variable -> VART .)
+    NUMBER          reduce using rule 37 (variable -> VART .)
+    FLOATNUMBER     reduce using rule 37 (variable -> VART .)
+    PI              reduce using rule 37 (variable -> VART .)
+    VART            reduce using rule 37 (variable -> VART .)
+
+
+state 19
 
     (9) function -> PLOT FOURIERTRANSFORM . expression COMMA expression
     (11) function -> PLOT FOURIERTRANSFORM . exprname
@@ -389,7 +423,7 @@ state 18
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -404,28 +438,31 @@ state 18
     (8) exprname -> . EXPRNAME EQUALS EXPRNAME
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
-    LPARENT         shift and go to state 36
+    LPARENT         shift and go to state 37
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     EXPRNAME        shift and go to state 7
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    expression                     shift and go to state 34
-    exprname                       shift and go to state 35
+    expression                     shift and go to state 35
+    exprname                       shift and go to state 36
     term                           shift and go to state 9
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 19
+state 20
 
     (13) function -> PLOT exprname .
 
@@ -434,11 +471,12 @@ state 19
     SIN             reduce using rule 13 (function -> PLOT exprname .)
     EXP             reduce using rule 13 (function -> PLOT exprname .)
     NUMBER          reduce using rule 13 (function -> PLOT exprname .)
+    FLOATNUMBER     reduce using rule 13 (function -> PLOT exprname .)
     PI              reduce using rule 13 (function -> PLOT exprname .)
     VART            reduce using rule 13 (function -> PLOT exprname .)
 
 
-state 20
+state 21
 
     (10) function -> FOURIERTRANSFORM LPARENT . expression COMMA expression RPARENT
     (14) expression -> . expression PLUS term
@@ -447,7 +485,7 @@ state 20
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -458,25 +496,28 @@ state 20
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    expression                     shift and go to state 37
+    expression                     shift and go to state 38
     term                           shift and go to state 9
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 21
+state 22
 
     (6) exprname -> EXPRNAME EQUALS . function
     (7) exprname -> EXPRNAME EQUALS . expression COMMA expression
@@ -492,7 +533,7 @@ state 21
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -503,82 +544,47 @@ state 21
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
-    EXPRNAME        shift and go to state 38
+    EXPRNAME        shift and go to state 39
     PLOT            shift and go to state 5
     FOURIERTRANSFORM shift and go to state 6
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    function                       shift and go to state 39
-    expression                     shift and go to state 40
-    term                           shift and go to state 9
-    factor                         shift and go to state 13
-    variable                       shift and go to state 14
-
-state 22
-
-    (14) expression -> expression PLUS . term
-    (15) expression -> expression PLUS . expression
-    (29) term -> . factor variable
-    (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression MINUS term
-    (17) expression -> . expression MINUS expression
-    (18) expression -> . COS LPARENT expression RPARENT
-    (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
-    (21) expression -> . term COS LPARENT expression RPARENT
-    (22) expression -> . term SIN LPARENT expression RPARENT
-    (23) expression -> . term EXP LPARENT expression RPARENT
-    (24) expression -> . expression TIMES term
-    (25) expression -> . expression TIMES expression
-    (26) expression -> . expression DIVIDE term
-    (27) expression -> . expression DIVIDE expression
-    (28) expression -> . term
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
-
-    COS             shift and go to state 10
-    SIN             shift and go to state 11
-    EXP             shift and go to state 12
-    NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
-
+    function                       shift and go to state 40
     expression                     shift and go to state 41
-    term                           shift and go to state 42
+    term                           shift and go to state 9
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
 state 23
 
-    (16) expression -> expression MINUS . term
-    (17) expression -> expression MINUS . expression
+    (14) expression -> expression PLUS . term
+    (15) expression -> expression PLUS . expression
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
     (14) expression -> . expression PLUS term
     (15) expression -> . expression PLUS expression
     (16) expression -> . expression MINUS term
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -587,37 +593,40 @@ state 23
     (26) expression -> . expression DIVIDE term
     (27) expression -> . expression DIVIDE expression
     (28) expression -> . term
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
+    EXP             shift and go to state 44
     COS             shift and go to state 10
     SIN             shift and go to state 11
-    EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    expression                     shift and go to state 43
-    term                           shift and go to state 44
+    expression                     shift and go to state 42
+    term                           shift and go to state 43
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
 state 24
 
-    (24) expression -> expression TIMES . term
-    (25) expression -> expression TIMES . expression
+    (16) expression -> expression MINUS . term
+    (17) expression -> expression MINUS . expression
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
     (14) expression -> . expression PLUS term
     (15) expression -> . expression PLUS expression
     (16) expression -> . expression MINUS term
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -626,16 +635,18 @@ state 24
     (26) expression -> . expression DIVIDE term
     (27) expression -> . expression DIVIDE expression
     (28) expression -> . term
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
+    EXP             shift and go to state 44
     COS             shift and go to state 10
     SIN             shift and go to state 11
-    EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
     expression                     shift and go to state 45
     term                           shift and go to state 46
@@ -644,19 +655,20 @@ state 24
 
 state 25
 
-    (26) expression -> expression DIVIDE . term
-    (27) expression -> expression DIVIDE . expression
+    (24) expression -> expression TIMES . term
+    (25) expression -> expression TIMES . expression
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
     (14) expression -> . expression PLUS term
     (15) expression -> . expression PLUS expression
     (16) expression -> . expression MINUS term
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -665,16 +677,18 @@ state 25
     (26) expression -> . expression DIVIDE term
     (27) expression -> . expression DIVIDE expression
     (28) expression -> . term
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
+    EXP             shift and go to state 44
     COS             shift and go to state 10
     SIN             shift and go to state 11
-    EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
     expression                     shift and go to state 47
     term                           shift and go to state 48
@@ -683,26 +697,68 @@ state 25
 
 state 26
 
-    (21) expression -> term COS . LPARENT expression RPARENT
+    (26) expression -> expression DIVIDE . term
+    (27) expression -> expression DIVIDE . expression
+    (29) term -> . factor variable
+    (30) term -> . variable EXPONENT factor
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (14) expression -> . expression PLUS term
+    (15) expression -> . expression PLUS expression
+    (16) expression -> . expression MINUS term
+    (17) expression -> . expression MINUS expression
+    (18) expression -> . COS LPARENT expression RPARENT
+    (19) expression -> . SIN LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
+    (21) expression -> . term COS LPARENT expression RPARENT
+    (22) expression -> . term SIN LPARENT expression RPARENT
+    (23) expression -> . term EXP LPARENT expression RPARENT
+    (24) expression -> . expression TIMES term
+    (25) expression -> . expression TIMES expression
+    (26) expression -> . expression DIVIDE term
+    (27) expression -> . expression DIVIDE expression
+    (28) expression -> . term
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
-    LPARENT         shift and go to state 49
+    EXP             shift and go to state 44
+    COS             shift and go to state 10
+    SIN             shift and go to state 11
+    NUMBER          shift and go to state 15
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
+    expression                     shift and go to state 49
+    term                           shift and go to state 50
+    factor                         shift and go to state 13
+    variable                       shift and go to state 14
 
 state 27
 
-    (22) expression -> term SIN . LPARENT expression RPARENT
-
-    LPARENT         shift and go to state 50
-
-
-state 28
-
-    (23) expression -> term EXP . LPARENT expression RPARENT
+    (21) expression -> term COS . LPARENT expression RPARENT
 
     LPARENT         shift and go to state 51
 
 
+state 28
+
+    (22) expression -> term SIN . LPARENT expression RPARENT
+
+    LPARENT         shift and go to state 52
+
+
 state 29
+
+    (23) expression -> term EXP . LPARENT expression RPARENT
+
+    LPARENT         shift and go to state 53
+
+
+state 30
 
     (18) expression -> COS LPARENT . expression RPARENT
     (14) expression -> . expression PLUS term
@@ -711,7 +767,7 @@ state 29
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -722,25 +778,28 @@ state 29
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    expression                     shift and go to state 52
+    expression                     shift and go to state 54
     term                           shift and go to state 9
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 30
+state 31
 
     (19) expression -> SIN LPARENT . expression RPARENT
     (14) expression -> . expression PLUS term
@@ -749,7 +808,7 @@ state 30
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -760,63 +819,36 @@ state 30
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    expression                     shift and go to state 53
-    term                           shift and go to state 9
-    factor                         shift and go to state 13
-    variable                       shift and go to state 14
-
-state 31
-
-    (20) expression -> EXP LPARENT . expression RPARENT
-    (14) expression -> . expression PLUS term
-    (15) expression -> . expression PLUS expression
-    (16) expression -> . expression MINUS term
-    (17) expression -> . expression MINUS expression
-    (18) expression -> . COS LPARENT expression RPARENT
-    (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
-    (21) expression -> . term COS LPARENT expression RPARENT
-    (22) expression -> . term SIN LPARENT expression RPARENT
-    (23) expression -> . term EXP LPARENT expression RPARENT
-    (24) expression -> . expression TIMES term
-    (25) expression -> . expression TIMES expression
-    (26) expression -> . expression DIVIDE term
-    (27) expression -> . expression DIVIDE expression
-    (28) expression -> . term
-    (29) term -> . factor variable
-    (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
-
-    COS             shift and go to state 10
-    SIN             shift and go to state 11
-    EXP             shift and go to state 12
-    NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
-
-    expression                     shift and go to state 54
+    expression                     shift and go to state 55
     term                           shift and go to state 9
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
 state 32
+
+    (20) expression -> EXP EXPONENT . LPARENT expression RPARENT
+    (31) term -> EXP EXPONENT . LPARENT expression RPARENT
+
+    LPARENT         shift and go to state 56
+
+
+state 33
 
     (29) term -> factor variable .
 
@@ -831,22 +863,25 @@ state 32
     COMMA           reduce using rule 29 (term -> factor variable .)
     RPARENT         reduce using rule 29 (term -> factor variable .)
     NUMBER          reduce using rule 29 (term -> factor variable .)
+    FLOATNUMBER     reduce using rule 29 (term -> factor variable .)
     PI              reduce using rule 29 (term -> factor variable .)
     VART            reduce using rule 29 (term -> factor variable .)
 
 
-state 33
+state 34
 
     (30) term -> variable EXPONENT . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
 
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
 
-    factor                         shift and go to state 55
+    factor                         shift and go to state 57
 
-state 34
+state 35
 
     (9) function -> PLOT FOURIERTRANSFORM expression . COMMA expression
     (14) expression -> expression . PLUS term
@@ -858,14 +893,14 @@ state 34
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    COMMA           shift and go to state 56
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    COMMA           shift and go to state 58
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 35
+state 36
 
     (11) function -> PLOT FOURIERTRANSFORM exprname .
 
@@ -874,11 +909,12 @@ state 35
     SIN             reduce using rule 11 (function -> PLOT FOURIERTRANSFORM exprname .)
     EXP             reduce using rule 11 (function -> PLOT FOURIERTRANSFORM exprname .)
     NUMBER          reduce using rule 11 (function -> PLOT FOURIERTRANSFORM exprname .)
+    FLOATNUMBER     reduce using rule 11 (function -> PLOT FOURIERTRANSFORM exprname .)
     PI              reduce using rule 11 (function -> PLOT FOURIERTRANSFORM exprname .)
     VART            reduce using rule 11 (function -> PLOT FOURIERTRANSFORM exprname .)
 
 
-state 36
+state 37
 
     (12) function -> PLOT FOURIERTRANSFORM LPARENT . expression RPARENT
     (14) expression -> . expression PLUS term
@@ -887,7 +923,7 @@ state 36
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -898,25 +934,28 @@ state 36
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    expression                     shift and go to state 57
+    expression                     shift and go to state 59
     term                           shift and go to state 9
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 37
+state 38
 
     (10) function -> FOURIERTRANSFORM LPARENT expression . COMMA expression RPARENT
     (14) expression -> expression . PLUS term
@@ -928,14 +967,14 @@ state 37
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    COMMA           shift and go to state 58
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    COMMA           shift and go to state 60
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 38
+state 39
 
     (8) exprname -> EXPRNAME EQUALS EXPRNAME .
 
@@ -943,12 +982,13 @@ state 38
     SIN             reduce using rule 8 (exprname -> EXPRNAME EQUALS EXPRNAME .)
     EXP             reduce using rule 8 (exprname -> EXPRNAME EQUALS EXPRNAME .)
     NUMBER          reduce using rule 8 (exprname -> EXPRNAME EQUALS EXPRNAME .)
+    FLOATNUMBER     reduce using rule 8 (exprname -> EXPRNAME EQUALS EXPRNAME .)
     PI              reduce using rule 8 (exprname -> EXPRNAME EQUALS EXPRNAME .)
     VART            reduce using rule 8 (exprname -> EXPRNAME EQUALS EXPRNAME .)
     $end            reduce using rule 8 (exprname -> EXPRNAME EQUALS EXPRNAME .)
 
 
-state 39
+state 40
 
     (6) exprname -> EXPRNAME EQUALS function .
 
@@ -956,12 +996,13 @@ state 39
     SIN             reduce using rule 6 (exprname -> EXPRNAME EQUALS function .)
     EXP             reduce using rule 6 (exprname -> EXPRNAME EQUALS function .)
     NUMBER          reduce using rule 6 (exprname -> EXPRNAME EQUALS function .)
+    FLOATNUMBER     reduce using rule 6 (exprname -> EXPRNAME EQUALS function .)
     PI              reduce using rule 6 (exprname -> EXPRNAME EQUALS function .)
     VART            reduce using rule 6 (exprname -> EXPRNAME EQUALS function .)
     $end            reduce using rule 6 (exprname -> EXPRNAME EQUALS function .)
 
 
-state 40
+state 41
 
     (7) exprname -> EXPRNAME EQUALS expression . COMMA expression
     (14) expression -> expression . PLUS term
@@ -973,14 +1014,14 @@ state 40
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    COMMA           shift and go to state 59
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    COMMA           shift and go to state 61
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 41
+state 42
 
     (15) expression -> expression PLUS expression .
     (14) expression -> expression . PLUS term
@@ -1003,12 +1044,13 @@ state 41
     SIN             reduce using rule 15 (expression -> expression PLUS expression .)
     EXP             reduce using rule 15 (expression -> expression PLUS expression .)
     NUMBER          reduce using rule 15 (expression -> expression PLUS expression .)
+    FLOATNUMBER     reduce using rule 15 (expression -> expression PLUS expression .)
     PI              reduce using rule 15 (expression -> expression PLUS expression .)
     VART            reduce using rule 15 (expression -> expression PLUS expression .)
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
   ! PLUS            [ reduce using rule 15 (expression -> expression PLUS expression .) ]
   ! MINUS           [ reduce using rule 15 (expression -> expression PLUS expression .) ]
@@ -1016,7 +1058,7 @@ state 41
   ! DIVIDE          [ reduce using rule 15 (expression -> expression PLUS expression .) ]
 
 
-state 42
+state 43
 
     (14) expression -> expression PLUS term .
     (21) expression -> term . COS LPARENT expression RPARENT
@@ -1038,6 +1080,7 @@ state 42
   ! shift/reduce conflict for SIN resolved as shift
   ! shift/reduce conflict for EXP resolved as shift
   ! reduce/reduce conflict for NUMBER resolved using rule 14 (expression -> expression PLUS term .)
+  ! reduce/reduce conflict for FLOATNUMBER resolved using rule 14 (expression -> expression PLUS term .)
   ! reduce/reduce conflict for PI resolved using rule 14 (expression -> expression PLUS term .)
   ! reduce/reduce conflict for VART resolved using rule 14 (expression -> expression PLUS term .)
     PLUS            reduce using rule 14 (expression -> expression PLUS term .)
@@ -1048,11 +1091,12 @@ state 42
     COMMA           reduce using rule 14 (expression -> expression PLUS term .)
     RPARENT         reduce using rule 14 (expression -> expression PLUS term .)
     NUMBER          reduce using rule 14 (expression -> expression PLUS term .)
+    FLOATNUMBER     reduce using rule 14 (expression -> expression PLUS term .)
     PI              reduce using rule 14 (expression -> expression PLUS term .)
     VART            reduce using rule 14 (expression -> expression PLUS term .)
-    COS             shift and go to state 26
-    SIN             shift and go to state 27
-    EXP             shift and go to state 28
+    COS             shift and go to state 27
+    SIN             shift and go to state 28
+    EXP             shift and go to state 29
 
   ! COS             [ reduce using rule 14 (expression -> expression PLUS term .) ]
   ! SIN             [ reduce using rule 14 (expression -> expression PLUS term .) ]
@@ -1068,11 +1112,20 @@ state 42
   ! SIN             [ reduce using rule 28 (expression -> term .) ]
   ! EXP             [ reduce using rule 28 (expression -> term .) ]
   ! NUMBER          [ reduce using rule 28 (expression -> term .) ]
+  ! FLOATNUMBER     [ reduce using rule 28 (expression -> term .) ]
   ! PI              [ reduce using rule 28 (expression -> term .) ]
   ! VART            [ reduce using rule 28 (expression -> term .) ]
 
 
-state 43
+state 44
+
+    (31) term -> EXP . EXPONENT LPARENT expression RPARENT
+    (20) expression -> EXP . EXPONENT LPARENT expression RPARENT
+
+    EXPONENT        shift and go to state 62
+
+
+state 45
 
     (17) expression -> expression MINUS expression .
     (14) expression -> expression . PLUS term
@@ -1095,12 +1148,13 @@ state 43
     SIN             reduce using rule 17 (expression -> expression MINUS expression .)
     EXP             reduce using rule 17 (expression -> expression MINUS expression .)
     NUMBER          reduce using rule 17 (expression -> expression MINUS expression .)
+    FLOATNUMBER     reduce using rule 17 (expression -> expression MINUS expression .)
     PI              reduce using rule 17 (expression -> expression MINUS expression .)
     VART            reduce using rule 17 (expression -> expression MINUS expression .)
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
   ! PLUS            [ reduce using rule 17 (expression -> expression MINUS expression .) ]
   ! MINUS           [ reduce using rule 17 (expression -> expression MINUS expression .) ]
@@ -1108,7 +1162,7 @@ state 43
   ! DIVIDE          [ reduce using rule 17 (expression -> expression MINUS expression .) ]
 
 
-state 44
+state 46
 
     (16) expression -> expression MINUS term .
     (21) expression -> term . COS LPARENT expression RPARENT
@@ -1130,6 +1184,7 @@ state 44
   ! shift/reduce conflict for SIN resolved as shift
   ! shift/reduce conflict for EXP resolved as shift
   ! reduce/reduce conflict for NUMBER resolved using rule 16 (expression -> expression MINUS term .)
+  ! reduce/reduce conflict for FLOATNUMBER resolved using rule 16 (expression -> expression MINUS term .)
   ! reduce/reduce conflict for PI resolved using rule 16 (expression -> expression MINUS term .)
   ! reduce/reduce conflict for VART resolved using rule 16 (expression -> expression MINUS term .)
     PLUS            reduce using rule 16 (expression -> expression MINUS term .)
@@ -1140,11 +1195,12 @@ state 44
     COMMA           reduce using rule 16 (expression -> expression MINUS term .)
     RPARENT         reduce using rule 16 (expression -> expression MINUS term .)
     NUMBER          reduce using rule 16 (expression -> expression MINUS term .)
+    FLOATNUMBER     reduce using rule 16 (expression -> expression MINUS term .)
     PI              reduce using rule 16 (expression -> expression MINUS term .)
     VART            reduce using rule 16 (expression -> expression MINUS term .)
-    COS             shift and go to state 26
-    SIN             shift and go to state 27
-    EXP             shift and go to state 28
+    COS             shift and go to state 27
+    SIN             shift and go to state 28
+    EXP             shift and go to state 29
 
   ! COS             [ reduce using rule 16 (expression -> expression MINUS term .) ]
   ! SIN             [ reduce using rule 16 (expression -> expression MINUS term .) ]
@@ -1160,11 +1216,12 @@ state 44
   ! SIN             [ reduce using rule 28 (expression -> term .) ]
   ! EXP             [ reduce using rule 28 (expression -> term .) ]
   ! NUMBER          [ reduce using rule 28 (expression -> term .) ]
+  ! FLOATNUMBER     [ reduce using rule 28 (expression -> term .) ]
   ! PI              [ reduce using rule 28 (expression -> term .) ]
   ! VART            [ reduce using rule 28 (expression -> term .) ]
 
 
-state 45
+state 47
 
     (25) expression -> expression TIMES expression .
     (14) expression -> expression . PLUS term
@@ -1187,12 +1244,13 @@ state 45
     SIN             reduce using rule 25 (expression -> expression TIMES expression .)
     EXP             reduce using rule 25 (expression -> expression TIMES expression .)
     NUMBER          reduce using rule 25 (expression -> expression TIMES expression .)
+    FLOATNUMBER     reduce using rule 25 (expression -> expression TIMES expression .)
     PI              reduce using rule 25 (expression -> expression TIMES expression .)
     VART            reduce using rule 25 (expression -> expression TIMES expression .)
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
   ! PLUS            [ reduce using rule 25 (expression -> expression TIMES expression .) ]
   ! MINUS           [ reduce using rule 25 (expression -> expression TIMES expression .) ]
@@ -1200,7 +1258,7 @@ state 45
   ! DIVIDE          [ reduce using rule 25 (expression -> expression TIMES expression .) ]
 
 
-state 46
+state 48
 
     (24) expression -> expression TIMES term .
     (21) expression -> term . COS LPARENT expression RPARENT
@@ -1222,6 +1280,7 @@ state 46
   ! shift/reduce conflict for SIN resolved as shift
   ! shift/reduce conflict for EXP resolved as shift
   ! reduce/reduce conflict for NUMBER resolved using rule 24 (expression -> expression TIMES term .)
+  ! reduce/reduce conflict for FLOATNUMBER resolved using rule 24 (expression -> expression TIMES term .)
   ! reduce/reduce conflict for PI resolved using rule 24 (expression -> expression TIMES term .)
   ! reduce/reduce conflict for VART resolved using rule 24 (expression -> expression TIMES term .)
     PLUS            reduce using rule 24 (expression -> expression TIMES term .)
@@ -1232,11 +1291,12 @@ state 46
     COMMA           reduce using rule 24 (expression -> expression TIMES term .)
     RPARENT         reduce using rule 24 (expression -> expression TIMES term .)
     NUMBER          reduce using rule 24 (expression -> expression TIMES term .)
+    FLOATNUMBER     reduce using rule 24 (expression -> expression TIMES term .)
     PI              reduce using rule 24 (expression -> expression TIMES term .)
     VART            reduce using rule 24 (expression -> expression TIMES term .)
-    COS             shift and go to state 26
-    SIN             shift and go to state 27
-    EXP             shift and go to state 28
+    COS             shift and go to state 27
+    SIN             shift and go to state 28
+    EXP             shift and go to state 29
 
   ! COS             [ reduce using rule 24 (expression -> expression TIMES term .) ]
   ! SIN             [ reduce using rule 24 (expression -> expression TIMES term .) ]
@@ -1252,11 +1312,12 @@ state 46
   ! SIN             [ reduce using rule 28 (expression -> term .) ]
   ! EXP             [ reduce using rule 28 (expression -> term .) ]
   ! NUMBER          [ reduce using rule 28 (expression -> term .) ]
+  ! FLOATNUMBER     [ reduce using rule 28 (expression -> term .) ]
   ! PI              [ reduce using rule 28 (expression -> term .) ]
   ! VART            [ reduce using rule 28 (expression -> term .) ]
 
 
-state 47
+state 49
 
     (27) expression -> expression DIVIDE expression .
     (14) expression -> expression . PLUS term
@@ -1279,12 +1340,13 @@ state 47
     SIN             reduce using rule 27 (expression -> expression DIVIDE expression .)
     EXP             reduce using rule 27 (expression -> expression DIVIDE expression .)
     NUMBER          reduce using rule 27 (expression -> expression DIVIDE expression .)
+    FLOATNUMBER     reduce using rule 27 (expression -> expression DIVIDE expression .)
     PI              reduce using rule 27 (expression -> expression DIVIDE expression .)
     VART            reduce using rule 27 (expression -> expression DIVIDE expression .)
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
   ! PLUS            [ reduce using rule 27 (expression -> expression DIVIDE expression .) ]
   ! MINUS           [ reduce using rule 27 (expression -> expression DIVIDE expression .) ]
@@ -1292,7 +1354,7 @@ state 47
   ! DIVIDE          [ reduce using rule 27 (expression -> expression DIVIDE expression .) ]
 
 
-state 48
+state 50
 
     (26) expression -> expression DIVIDE term .
     (21) expression -> term . COS LPARENT expression RPARENT
@@ -1314,6 +1376,7 @@ state 48
   ! shift/reduce conflict for SIN resolved as shift
   ! shift/reduce conflict for EXP resolved as shift
   ! reduce/reduce conflict for NUMBER resolved using rule 26 (expression -> expression DIVIDE term .)
+  ! reduce/reduce conflict for FLOATNUMBER resolved using rule 26 (expression -> expression DIVIDE term .)
   ! reduce/reduce conflict for PI resolved using rule 26 (expression -> expression DIVIDE term .)
   ! reduce/reduce conflict for VART resolved using rule 26 (expression -> expression DIVIDE term .)
     PLUS            reduce using rule 26 (expression -> expression DIVIDE term .)
@@ -1324,11 +1387,12 @@ state 48
     COMMA           reduce using rule 26 (expression -> expression DIVIDE term .)
     RPARENT         reduce using rule 26 (expression -> expression DIVIDE term .)
     NUMBER          reduce using rule 26 (expression -> expression DIVIDE term .)
+    FLOATNUMBER     reduce using rule 26 (expression -> expression DIVIDE term .)
     PI              reduce using rule 26 (expression -> expression DIVIDE term .)
     VART            reduce using rule 26 (expression -> expression DIVIDE term .)
-    COS             shift and go to state 26
-    SIN             shift and go to state 27
-    EXP             shift and go to state 28
+    COS             shift and go to state 27
+    SIN             shift and go to state 28
+    EXP             shift and go to state 29
 
   ! COS             [ reduce using rule 26 (expression -> expression DIVIDE term .) ]
   ! SIN             [ reduce using rule 26 (expression -> expression DIVIDE term .) ]
@@ -1344,11 +1408,12 @@ state 48
   ! SIN             [ reduce using rule 28 (expression -> term .) ]
   ! EXP             [ reduce using rule 28 (expression -> term .) ]
   ! NUMBER          [ reduce using rule 28 (expression -> term .) ]
+  ! FLOATNUMBER     [ reduce using rule 28 (expression -> term .) ]
   ! PI              [ reduce using rule 28 (expression -> term .) ]
   ! VART            [ reduce using rule 28 (expression -> term .) ]
 
 
-state 49
+state 51
 
     (21) expression -> term COS LPARENT . expression RPARENT
     (14) expression -> . expression PLUS term
@@ -1357,7 +1422,7 @@ state 49
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -1368,25 +1433,28 @@ state 49
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
     term                           shift and go to state 9
-    expression                     shift and go to state 60
+    expression                     shift and go to state 63
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 50
+state 52
 
     (22) expression -> term SIN LPARENT . expression RPARENT
     (14) expression -> . expression PLUS term
@@ -1395,7 +1463,7 @@ state 50
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -1406,25 +1474,28 @@ state 50
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
     term                           shift and go to state 9
-    expression                     shift and go to state 61
+    expression                     shift and go to state 64
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 51
+state 53
 
     (23) expression -> term EXP LPARENT . expression RPARENT
     (14) expression -> . expression PLUS term
@@ -1433,7 +1504,7 @@ state 51
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -1444,25 +1515,28 @@ state 51
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
     term                           shift and go to state 9
-    expression                     shift and go to state 62
+    expression                     shift and go to state 65
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 52
+state 54
 
     (18) expression -> COS LPARENT expression . RPARENT
     (14) expression -> expression . PLUS term
@@ -1474,14 +1548,14 @@ state 52
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    RPARENT         shift and go to state 63
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    RPARENT         shift and go to state 66
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 53
+state 55
 
     (19) expression -> SIN LPARENT expression . RPARENT
     (14) expression -> expression . PLUS term
@@ -1493,33 +1567,56 @@ state 53
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    RPARENT         shift and go to state 64
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    RPARENT         shift and go to state 67
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 54
+state 56
 
-    (20) expression -> EXP LPARENT expression . RPARENT
-    (14) expression -> expression . PLUS term
-    (15) expression -> expression . PLUS expression
-    (16) expression -> expression . MINUS term
-    (17) expression -> expression . MINUS expression
-    (24) expression -> expression . TIMES term
-    (25) expression -> expression . TIMES expression
-    (26) expression -> expression . DIVIDE term
-    (27) expression -> expression . DIVIDE expression
+    (20) expression -> EXP EXPONENT LPARENT . expression RPARENT
+    (31) term -> EXP EXPONENT LPARENT . expression RPARENT
+    (14) expression -> . expression PLUS term
+    (15) expression -> . expression PLUS expression
+    (16) expression -> . expression MINUS term
+    (17) expression -> . expression MINUS expression
+    (18) expression -> . COS LPARENT expression RPARENT
+    (19) expression -> . SIN LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
+    (21) expression -> . term COS LPARENT expression RPARENT
+    (22) expression -> . term SIN LPARENT expression RPARENT
+    (23) expression -> . term EXP LPARENT expression RPARENT
+    (24) expression -> . expression TIMES term
+    (25) expression -> . expression TIMES expression
+    (26) expression -> . expression DIVIDE term
+    (27) expression -> . expression DIVIDE expression
+    (28) expression -> . term
+    (29) term -> . factor variable
+    (30) term -> . variable EXPONENT factor
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
-    RPARENT         shift and go to state 65
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    COS             shift and go to state 10
+    SIN             shift and go to state 11
+    EXP             shift and go to state 12
+    NUMBER          shift and go to state 15
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
+    expression                     shift and go to state 68
+    term                           shift and go to state 9
+    factor                         shift and go to state 13
+    variable                       shift and go to state 14
 
-state 55
+state 57
 
     (30) term -> variable EXPONENT factor .
 
@@ -1534,11 +1631,12 @@ state 55
     COMMA           reduce using rule 30 (term -> variable EXPONENT factor .)
     RPARENT         reduce using rule 30 (term -> variable EXPONENT factor .)
     NUMBER          reduce using rule 30 (term -> variable EXPONENT factor .)
+    FLOATNUMBER     reduce using rule 30 (term -> variable EXPONENT factor .)
     PI              reduce using rule 30 (term -> variable EXPONENT factor .)
     VART            reduce using rule 30 (term -> variable EXPONENT factor .)
 
 
-state 56
+state 58
 
     (9) function -> PLOT FOURIERTRANSFORM expression COMMA . expression
     (14) expression -> . expression PLUS term
@@ -1547,7 +1645,7 @@ state 56
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -1558,25 +1656,28 @@ state 56
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    expression                     shift and go to state 66
+    expression                     shift and go to state 69
     term                           shift and go to state 9
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 57
+state 59
 
     (12) function -> PLOT FOURIERTRANSFORM LPARENT expression . RPARENT
     (14) expression -> expression . PLUS term
@@ -1588,14 +1689,14 @@ state 57
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    RPARENT         shift and go to state 67
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    RPARENT         shift and go to state 70
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 58
+state 60
 
     (10) function -> FOURIERTRANSFORM LPARENT expression COMMA . expression RPARENT
     (14) expression -> . expression PLUS term
@@ -1604,7 +1705,7 @@ state 58
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -1615,25 +1716,28 @@ state 58
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    expression                     shift and go to state 68
+    expression                     shift and go to state 71
     term                           shift and go to state 9
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 59
+state 61
 
     (7) exprname -> EXPRNAME EQUALS expression COMMA . expression
     (14) expression -> . expression PLUS term
@@ -1642,7 +1746,7 @@ state 59
     (17) expression -> . expression MINUS expression
     (18) expression -> . COS LPARENT expression RPARENT
     (19) expression -> . SIN LPARENT expression RPARENT
-    (20) expression -> . EXP LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
     (21) expression -> . term COS LPARENT expression RPARENT
     (22) expression -> . term SIN LPARENT expression RPARENT
     (23) expression -> . term EXP LPARENT expression RPARENT
@@ -1653,25 +1757,36 @@ state 59
     (28) expression -> . term
     (29) term -> . factor variable
     (30) term -> . variable EXPONENT factor
-    (31) term -> . variable
-    (32) term -> . factor
-    (33) factor -> . NUMBER
-    (34) factor -> . PI
-    (35) variable -> . VART
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
 
     COS             shift and go to state 10
     SIN             shift and go to state 11
     EXP             shift and go to state 12
     NUMBER          shift and go to state 15
-    PI              shift and go to state 16
-    VART            shift and go to state 17
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
 
-    expression                     shift and go to state 69
+    expression                     shift and go to state 72
     term                           shift and go to state 9
     factor                         shift and go to state 13
     variable                       shift and go to state 14
 
-state 60
+state 62
+
+    (31) term -> EXP EXPONENT . LPARENT expression RPARENT
+    (20) expression -> EXP EXPONENT . LPARENT expression RPARENT
+
+    LPARENT         shift and go to state 73
+
+
+state 63
 
     (21) expression -> term COS LPARENT expression . RPARENT
     (14) expression -> expression . PLUS term
@@ -1683,14 +1798,14 @@ state 60
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    RPARENT         shift and go to state 70
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    RPARENT         shift and go to state 74
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 61
+state 64
 
     (22) expression -> term SIN LPARENT expression . RPARENT
     (14) expression -> expression . PLUS term
@@ -1702,14 +1817,14 @@ state 61
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    RPARENT         shift and go to state 71
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    RPARENT         shift and go to state 75
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 62
+state 65
 
     (23) expression -> term EXP LPARENT expression . RPARENT
     (14) expression -> expression . PLUS term
@@ -1721,14 +1836,14 @@ state 62
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    RPARENT         shift and go to state 72
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    RPARENT         shift and go to state 76
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 63
+state 66
 
     (18) expression -> COS LPARENT expression RPARENT .
 
@@ -1743,11 +1858,12 @@ state 63
     SIN             reduce using rule 18 (expression -> COS LPARENT expression RPARENT .)
     EXP             reduce using rule 18 (expression -> COS LPARENT expression RPARENT .)
     NUMBER          reduce using rule 18 (expression -> COS LPARENT expression RPARENT .)
+    FLOATNUMBER     reduce using rule 18 (expression -> COS LPARENT expression RPARENT .)
     PI              reduce using rule 18 (expression -> COS LPARENT expression RPARENT .)
     VART            reduce using rule 18 (expression -> COS LPARENT expression RPARENT .)
 
 
-state 64
+state 67
 
     (19) expression -> SIN LPARENT expression RPARENT .
 
@@ -1762,30 +1878,32 @@ state 64
     SIN             reduce using rule 19 (expression -> SIN LPARENT expression RPARENT .)
     EXP             reduce using rule 19 (expression -> SIN LPARENT expression RPARENT .)
     NUMBER          reduce using rule 19 (expression -> SIN LPARENT expression RPARENT .)
+    FLOATNUMBER     reduce using rule 19 (expression -> SIN LPARENT expression RPARENT .)
     PI              reduce using rule 19 (expression -> SIN LPARENT expression RPARENT .)
     VART            reduce using rule 19 (expression -> SIN LPARENT expression RPARENT .)
 
 
-state 65
+state 68
 
-    (20) expression -> EXP LPARENT expression RPARENT .
+    (20) expression -> EXP EXPONENT LPARENT expression . RPARENT
+    (31) term -> EXP EXPONENT LPARENT expression . RPARENT
+    (14) expression -> expression . PLUS term
+    (15) expression -> expression . PLUS expression
+    (16) expression -> expression . MINUS term
+    (17) expression -> expression . MINUS expression
+    (24) expression -> expression . TIMES term
+    (25) expression -> expression . TIMES expression
+    (26) expression -> expression . DIVIDE term
+    (27) expression -> expression . DIVIDE expression
 
-    PLUS            reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    MINUS           reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    TIMES           reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    DIVIDE          reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    $end            reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    COMMA           reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    RPARENT         reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    COS             reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    SIN             reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    EXP             reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    NUMBER          reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    PI              reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
-    VART            reduce using rule 20 (expression -> EXP LPARENT expression RPARENT .)
+    RPARENT         shift and go to state 77
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 66
+state 69
 
     (9) function -> PLOT FOURIERTRANSFORM expression COMMA expression .
     (14) expression -> expression . PLUS term
@@ -1802,15 +1920,16 @@ state 66
     SIN             reduce using rule 9 (function -> PLOT FOURIERTRANSFORM expression COMMA expression .)
     EXP             reduce using rule 9 (function -> PLOT FOURIERTRANSFORM expression COMMA expression .)
     NUMBER          reduce using rule 9 (function -> PLOT FOURIERTRANSFORM expression COMMA expression .)
+    FLOATNUMBER     reduce using rule 9 (function -> PLOT FOURIERTRANSFORM expression COMMA expression .)
     PI              reduce using rule 9 (function -> PLOT FOURIERTRANSFORM expression COMMA expression .)
     VART            reduce using rule 9 (function -> PLOT FOURIERTRANSFORM expression COMMA expression .)
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 67
+state 70
 
     (12) function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT .
 
@@ -1819,11 +1938,12 @@ state 67
     SIN             reduce using rule 12 (function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT .)
     EXP             reduce using rule 12 (function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT .)
     NUMBER          reduce using rule 12 (function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT .)
+    FLOATNUMBER     reduce using rule 12 (function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT .)
     PI              reduce using rule 12 (function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT .)
     VART            reduce using rule 12 (function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT .)
 
 
-state 68
+state 71
 
     (10) function -> FOURIERTRANSFORM LPARENT expression COMMA expression . RPARENT
     (14) expression -> expression . PLUS term
@@ -1835,14 +1955,14 @@ state 68
     (26) expression -> expression . DIVIDE term
     (27) expression -> expression . DIVIDE expression
 
-    RPARENT         shift and go to state 73
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    RPARENT         shift and go to state 78
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 69
+state 72
 
     (7) exprname -> EXPRNAME EQUALS expression COMMA expression .
     (14) expression -> expression . PLUS term
@@ -1858,16 +1978,59 @@ state 69
     SIN             reduce using rule 7 (exprname -> EXPRNAME EQUALS expression COMMA expression .)
     EXP             reduce using rule 7 (exprname -> EXPRNAME EQUALS expression COMMA expression .)
     NUMBER          reduce using rule 7 (exprname -> EXPRNAME EQUALS expression COMMA expression .)
+    FLOATNUMBER     reduce using rule 7 (exprname -> EXPRNAME EQUALS expression COMMA expression .)
     PI              reduce using rule 7 (exprname -> EXPRNAME EQUALS expression COMMA expression .)
     VART            reduce using rule 7 (exprname -> EXPRNAME EQUALS expression COMMA expression .)
     $end            reduce using rule 7 (exprname -> EXPRNAME EQUALS expression COMMA expression .)
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 23
-    TIMES           shift and go to state 24
-    DIVIDE          shift and go to state 25
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
 
 
-state 70
+state 73
+
+    (31) term -> EXP EXPONENT LPARENT . expression RPARENT
+    (20) expression -> EXP EXPONENT LPARENT . expression RPARENT
+    (14) expression -> . expression PLUS term
+    (15) expression -> . expression PLUS expression
+    (16) expression -> . expression MINUS term
+    (17) expression -> . expression MINUS expression
+    (18) expression -> . COS LPARENT expression RPARENT
+    (19) expression -> . SIN LPARENT expression RPARENT
+    (20) expression -> . EXP EXPONENT LPARENT expression RPARENT
+    (21) expression -> . term COS LPARENT expression RPARENT
+    (22) expression -> . term SIN LPARENT expression RPARENT
+    (23) expression -> . term EXP LPARENT expression RPARENT
+    (24) expression -> . expression TIMES term
+    (25) expression -> . expression TIMES expression
+    (26) expression -> . expression DIVIDE term
+    (27) expression -> . expression DIVIDE expression
+    (28) expression -> . term
+    (29) term -> . factor variable
+    (30) term -> . variable EXPONENT factor
+    (31) term -> . EXP EXPONENT LPARENT expression RPARENT
+    (32) term -> . variable
+    (33) term -> . factor
+    (34) factor -> . NUMBER
+    (35) factor -> . FLOATNUMBER
+    (36) factor -> . PI
+    (37) variable -> . VART
+
+    COS             shift and go to state 10
+    SIN             shift and go to state 11
+    EXP             shift and go to state 12
+    NUMBER          shift and go to state 15
+    FLOATNUMBER     shift and go to state 16
+    PI              shift and go to state 17
+    VART            shift and go to state 18
+
+    expression                     shift and go to state 79
+    term                           shift and go to state 9
+    factor                         shift and go to state 13
+    variable                       shift and go to state 14
+
+state 74
 
     (21) expression -> term COS LPARENT expression RPARENT .
 
@@ -1882,11 +2045,12 @@ state 70
     SIN             reduce using rule 21 (expression -> term COS LPARENT expression RPARENT .)
     EXP             reduce using rule 21 (expression -> term COS LPARENT expression RPARENT .)
     NUMBER          reduce using rule 21 (expression -> term COS LPARENT expression RPARENT .)
+    FLOATNUMBER     reduce using rule 21 (expression -> term COS LPARENT expression RPARENT .)
     PI              reduce using rule 21 (expression -> term COS LPARENT expression RPARENT .)
     VART            reduce using rule 21 (expression -> term COS LPARENT expression RPARENT .)
 
 
-state 71
+state 75
 
     (22) expression -> term SIN LPARENT expression RPARENT .
 
@@ -1901,11 +2065,12 @@ state 71
     SIN             reduce using rule 22 (expression -> term SIN LPARENT expression RPARENT .)
     EXP             reduce using rule 22 (expression -> term SIN LPARENT expression RPARENT .)
     NUMBER          reduce using rule 22 (expression -> term SIN LPARENT expression RPARENT .)
+    FLOATNUMBER     reduce using rule 22 (expression -> term SIN LPARENT expression RPARENT .)
     PI              reduce using rule 22 (expression -> term SIN LPARENT expression RPARENT .)
     VART            reduce using rule 22 (expression -> term SIN LPARENT expression RPARENT .)
 
 
-state 72
+state 76
 
     (23) expression -> term EXP LPARENT expression RPARENT .
 
@@ -1920,11 +2085,62 @@ state 72
     SIN             reduce using rule 23 (expression -> term EXP LPARENT expression RPARENT .)
     EXP             reduce using rule 23 (expression -> term EXP LPARENT expression RPARENT .)
     NUMBER          reduce using rule 23 (expression -> term EXP LPARENT expression RPARENT .)
+    FLOATNUMBER     reduce using rule 23 (expression -> term EXP LPARENT expression RPARENT .)
     PI              reduce using rule 23 (expression -> term EXP LPARENT expression RPARENT .)
     VART            reduce using rule 23 (expression -> term EXP LPARENT expression RPARENT .)
 
 
-state 73
+state 77
+
+    (20) expression -> EXP EXPONENT LPARENT expression RPARENT .
+    (31) term -> EXP EXPONENT LPARENT expression RPARENT .
+
+  ! reduce/reduce conflict for COS resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for SIN resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for EXP resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for PLUS resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for MINUS resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for TIMES resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for $end resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for COMMA resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for RPARENT resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for NUMBER resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for FLOATNUMBER resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for PI resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for VART resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    PLUS            reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    MINUS           reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    TIMES           reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    DIVIDE          reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    $end            reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    COMMA           reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    RPARENT         reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    COS             reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    SIN             reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    EXP             reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    NUMBER          reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    FLOATNUMBER     reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    PI              reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    VART            reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+
+  ! COS             [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! SIN             [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! EXP             [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! PLUS            [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! MINUS           [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! TIMES           [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! DIVIDE          [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! $end            [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! COMMA           [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! RPARENT         [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! NUMBER          [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! FLOATNUMBER     [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! PI              [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! VART            [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+
+
+state 78
 
     (10) function -> FOURIERTRANSFORM LPARENT expression COMMA expression RPARENT .
 
@@ -1933,8 +2149,79 @@ state 73
     SIN             reduce using rule 10 (function -> FOURIERTRANSFORM LPARENT expression COMMA expression RPARENT .)
     EXP             reduce using rule 10 (function -> FOURIERTRANSFORM LPARENT expression COMMA expression RPARENT .)
     NUMBER          reduce using rule 10 (function -> FOURIERTRANSFORM LPARENT expression COMMA expression RPARENT .)
+    FLOATNUMBER     reduce using rule 10 (function -> FOURIERTRANSFORM LPARENT expression COMMA expression RPARENT .)
     PI              reduce using rule 10 (function -> FOURIERTRANSFORM LPARENT expression COMMA expression RPARENT .)
     VART            reduce using rule 10 (function -> FOURIERTRANSFORM LPARENT expression COMMA expression RPARENT .)
+
+
+state 79
+
+    (31) term -> EXP EXPONENT LPARENT expression . RPARENT
+    (20) expression -> EXP EXPONENT LPARENT expression . RPARENT
+    (14) expression -> expression . PLUS term
+    (15) expression -> expression . PLUS expression
+    (16) expression -> expression . MINUS term
+    (17) expression -> expression . MINUS expression
+    (24) expression -> expression . TIMES term
+    (25) expression -> expression . TIMES expression
+    (26) expression -> expression . DIVIDE term
+    (27) expression -> expression . DIVIDE expression
+
+    RPARENT         shift and go to state 80
+    PLUS            shift and go to state 23
+    MINUS           shift and go to state 24
+    TIMES           shift and go to state 25
+    DIVIDE          shift and go to state 26
+
+
+state 80
+
+    (31) term -> EXP EXPONENT LPARENT expression RPARENT .
+    (20) expression -> EXP EXPONENT LPARENT expression RPARENT .
+
+  ! reduce/reduce conflict for PLUS resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for MINUS resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for TIMES resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for DIVIDE resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for $end resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for COMMA resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for RPARENT resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for COS resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for SIN resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for EXP resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for NUMBER resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for FLOATNUMBER resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for PI resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+  ! reduce/reduce conflict for VART resolved using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    PLUS            reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    MINUS           reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    TIMES           reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    DIVIDE          reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    $end            reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    COMMA           reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    RPARENT         reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    COS             reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    SIN             reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    EXP             reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    NUMBER          reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    FLOATNUMBER     reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    PI              reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+    VART            reduce using rule 20 (expression -> EXP EXPONENT LPARENT expression RPARENT .)
+
+  ! COS             [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! SIN             [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! EXP             [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! PLUS            [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! MINUS           [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! TIMES           [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! DIVIDE          [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! $end            [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! COMMA           [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! RPARENT         [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! NUMBER          [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! FLOATNUMBER     [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! PI              [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
+  ! VART            [ reduce using rule 31 (term -> EXP EXPONENT LPARENT expression RPARENT .) ]
 
 WARNING: 
 WARNING: Conflicts:
@@ -1943,26 +2230,16 @@ WARNING: shift/reduce conflict for COS in state 9 resolved as shift
 WARNING: shift/reduce conflict for SIN in state 9 resolved as shift
 WARNING: shift/reduce conflict for EXP in state 9 resolved as shift
 WARNING: shift/reduce conflict for VART in state 13 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 41 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 41 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 41 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 41 resolved as shift
-WARNING: shift/reduce conflict for COS in state 42 resolved as shift
-WARNING: shift/reduce conflict for SIN in state 42 resolved as shift
-WARNING: shift/reduce conflict for EXP in state 42 resolved as shift
-WARNING: shift/reduce conflict for COS in state 42 resolved as shift
-WARNING: shift/reduce conflict for SIN in state 42 resolved as shift
-WARNING: shift/reduce conflict for EXP in state 42 resolved as shift
-WARNING: shift/reduce conflict for PLUS in state 43 resolved as shift
-WARNING: shift/reduce conflict for MINUS in state 43 resolved as shift
-WARNING: shift/reduce conflict for TIMES in state 43 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 43 resolved as shift
-WARNING: shift/reduce conflict for COS in state 44 resolved as shift
-WARNING: shift/reduce conflict for SIN in state 44 resolved as shift
-WARNING: shift/reduce conflict for EXP in state 44 resolved as shift
-WARNING: shift/reduce conflict for COS in state 44 resolved as shift
-WARNING: shift/reduce conflict for SIN in state 44 resolved as shift
-WARNING: shift/reduce conflict for EXP in state 44 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 42 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 42 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 42 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 42 resolved as shift
+WARNING: shift/reduce conflict for COS in state 43 resolved as shift
+WARNING: shift/reduce conflict for SIN in state 43 resolved as shift
+WARNING: shift/reduce conflict for EXP in state 43 resolved as shift
+WARNING: shift/reduce conflict for COS in state 43 resolved as shift
+WARNING: shift/reduce conflict for SIN in state 43 resolved as shift
+WARNING: shift/reduce conflict for EXP in state 43 resolved as shift
 WARNING: shift/reduce conflict for PLUS in state 45 resolved as shift
 WARNING: shift/reduce conflict for MINUS in state 45 resolved as shift
 WARNING: shift/reduce conflict for TIMES in state 45 resolved as shift
@@ -1983,11 +2260,26 @@ WARNING: shift/reduce conflict for EXP in state 48 resolved as shift
 WARNING: shift/reduce conflict for COS in state 48 resolved as shift
 WARNING: shift/reduce conflict for SIN in state 48 resolved as shift
 WARNING: shift/reduce conflict for EXP in state 48 resolved as shift
-WARNING: reduce/reduce conflict in state 42 resolved using rule (expression -> expression PLUS term)
-WARNING: rejected rule (expression -> term) in state 42
-WARNING: reduce/reduce conflict in state 44 resolved using rule (expression -> expression MINUS term)
-WARNING: rejected rule (expression -> term) in state 44
-WARNING: reduce/reduce conflict in state 46 resolved using rule (expression -> expression TIMES term)
+WARNING: shift/reduce conflict for PLUS in state 49 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 49 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 49 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 49 resolved as shift
+WARNING: shift/reduce conflict for COS in state 50 resolved as shift
+WARNING: shift/reduce conflict for SIN in state 50 resolved as shift
+WARNING: shift/reduce conflict for EXP in state 50 resolved as shift
+WARNING: shift/reduce conflict for COS in state 50 resolved as shift
+WARNING: shift/reduce conflict for SIN in state 50 resolved as shift
+WARNING: shift/reduce conflict for EXP in state 50 resolved as shift
+WARNING: reduce/reduce conflict in state 43 resolved using rule (expression -> expression PLUS term)
+WARNING: rejected rule (expression -> term) in state 43
+WARNING: reduce/reduce conflict in state 46 resolved using rule (expression -> expression MINUS term)
 WARNING: rejected rule (expression -> term) in state 46
-WARNING: reduce/reduce conflict in state 48 resolved using rule (expression -> expression DIVIDE term)
+WARNING: reduce/reduce conflict in state 48 resolved using rule (expression -> expression TIMES term)
 WARNING: rejected rule (expression -> term) in state 48
+WARNING: reduce/reduce conflict in state 50 resolved using rule (expression -> expression DIVIDE term)
+WARNING: rejected rule (expression -> term) in state 50
+WARNING: reduce/reduce conflict in state 77 resolved using rule (expression -> EXP EXPONENT LPARENT expression RPARENT)
+WARNING: rejected rule (term -> EXP EXPONENT LPARENT expression RPARENT) in state 77
+WARNING: reduce/reduce conflict in state 80 resolved using rule (expression -> EXP EXPONENT LPARENT expression RPARENT)
+WARNING: rejected rule (term -> EXP EXPONENT LPARENT expression RPARENT) in state 80
+WARNING: Rule (term -> EXP EXPONENT LPARENT expression RPARENT) is never reduced

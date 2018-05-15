@@ -9,6 +9,7 @@ from FourierTransform import plotfft
 tokens = ('PLOT',
           'FOURIERTRANSFORM',
           'NUMBER',
+          'FLOATNUMBER',
           'PLUS',
           'MINUS',
           'TIMES',
@@ -56,17 +57,23 @@ t_EXP = r'(?i)exp'
 t_HEAVISIDE = r'(?i)heaviside'
 t_PI = r'(?i)pi'
 t_FOURIERTRANSFORM = r'(?i)fouriertransform'
-t_PULSE = r'(?i)pulse'
 t_EQUALS = r'\='
 t_COMMA = r'\,'
 t_VART = r't'
 
 # A regular expression rule with some action code
+
+def t_FLOATNUMBER(t):
+    r'-?\d+\.\d*(e-?\d+)?'
+    t.value = float(t.value)
+    return t
+
 def t_NUMBER(t):
     #r'-?\d+'
     r'\d+'
     t.value = int(t.value)
     return t
+
 
 def t_EXPRNAME(t):
     r'(([A-Za-z]+[0-9]+)|([A-Za-z][A-Za-z]+[0-9]*))+'
@@ -219,8 +226,8 @@ def p_expression_sin(p):
     p[0] = p[1] + '(' + p[3] + ')'
 
 def p_expression_exp(p):
-    'expression : EXP LPARENT expression RPARENT'
-    p[0] = p[1] + '(' + p[3] + ')'
+    'expression : EXP EXPONENT LPARENT expression RPARENT'
+    p[0] = p[1] + '^' + '(' + p[4] + ')'
 
 def p_expression_cos_amplitude(p):
     'expression : term COS LPARENT expression RPARENT'
@@ -232,7 +239,7 @@ def p_expression_sin_amplitude(p):
 
 def p_expression_exp_amplitude(p):
     'expression : term EXP LPARENT expression RPARENT'
-    p[0] = p[1] * p[2] + '(' + p[4] + ')'
+    p[0] = p[1] * p[2] + '^' + '(' + p[4] + ')'
 
 
 def p_expression_times(p):
@@ -260,9 +267,13 @@ def p_term_times(p):
     'term : factor variable'
     p[0] = str(p[1]) + str(p[2])
 
-def p_term_var_exp(p):
+def p_term_var_exponent(p):
     'term : variable EXPONENT factor'
     p[0] = str(p[1]) + '^' + str(p[3])
+
+def p_term_var_exp(p):
+    'term : EXP EXPONENT LPARENT expression RPARENT'
+    p[0] = str(p[1]) + '^' +  '(' + str(p[4]) + ')'
 
 def p_term_var(p):
     'term : variable'
@@ -275,6 +286,10 @@ def p_term_fac(p):
 ##############FACTOR################    #OK
 def p_factor_num(p):
     'factor : NUMBER'
+    p[0] = str(p[1])
+
+def p_factor_decimal(p):
+    'factor : FLOATNUMBER'
     p[0] = str(p[1])
 
 def p_factor_pi(p):
