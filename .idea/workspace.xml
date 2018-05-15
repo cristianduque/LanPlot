@@ -20,8 +20,8 @@
       <file leaf-file-name="lex.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="279" column="22" lean-forward="false" selection-start-line="265" selection-start-column="2" selection-end-line="279" selection-end-column="22" />
+            <state relative-caret-position="2025">
+              <caret line="135" column="30" lean-forward="false" selection-start-line="135" selection-start-column="30" selection-end-line="135" selection-end-column="30" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -44,8 +44,8 @@
       <file leaf-file-name="FourierTransform.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FourierTransform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="35" lean-forward="false" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+            <state relative-caret-position="38">
+              <caret line="7" column="42" lean-forward="false" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -326,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526239106823</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fourier Transform added functionality">
+      <created>1526342621342</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1526342621342</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -363,7 +370,8 @@
     <MESSAGE value="First commit" />
     <MESSAGE value="Second commit" />
     <MESSAGE value="Working on Fourier transform" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on Fourier transform" />
+    <MESSAGE value="Fourier Transform added functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fourier Transform added functionality" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -473,8 +481,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/FourierTransform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="35" lean-forward="false" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+        <state relative-caret-position="38">
+          <caret line="7" column="42" lean-forward="false" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
@@ -483,8 +491,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="279" column="22" lean-forward="false" selection-start-line="265" selection-start-column="2" selection-end-line="279" selection-end-column="22" />
+        <state relative-caret-position="2025">
+          <caret line="135" column="30" lean-forward="false" selection-start-line="135" selection-start-column="30" selection-end-line="135" selection-end-column="30" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

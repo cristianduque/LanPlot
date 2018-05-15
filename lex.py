@@ -17,9 +17,7 @@ tokens = ('PLOT',
           'EXPONENT',
           'EQUALS',
           'EXPRNAME',
-          'SHOWTEXT',
           'COMMA',
-          'QUOTATION',
           'SIN',
           'COS',
           'EXP',
@@ -57,9 +55,7 @@ t_PI = r'(?i)pi'
 t_FOURIERTRANSFORM = r'(?i)fouriertransform'
 t_PULSE = r'(?i)pulse'
 t_EQUALS = r'\='
-t_SHOWTEXT = r'"(.*?)"'
 t_COMMA = r'\,'
-t_QUOTATION = r'\"'
 t_VART = r't'
 
 # A regular expression rule with some action code
@@ -105,13 +101,13 @@ def t_error(t):
 lexer = lex.lex()
 
 # Test it out
-data = '''cos(2*pi*50*t)'''
+# data = '''cos(2*pi*50*t)'''
 
 # Give the lexer some input
-lexer.input(data)
+# lexer.input(data)
 
-# def printok():
-while True:
+def printok():
+    while True:
         tok = lexer.token()
         if not tok: break
         print(tok.type, tok.value)
@@ -124,9 +120,6 @@ import ply.yacc as yacc
 names = {}
 
 #############LangFunctions###############
-def p_langfunctions(p):
-    'langfunction : fouriertransform'
-    p[0] = str(p[1])
 
 def p_langfunctions1(p):
     'langfunction : plot'
@@ -140,7 +133,7 @@ def p_langfunctions2(p):
     'langfunction : exprname'
     p[0] = str(p[1])
 
-#############EXPRNAME SIGNAL FOURIER###############
+#############FOURIER TRANSFORM###############
 def p_fouriertransform(p):
     'fouriertransform : expression COMMA factor'
     p[0] = str(p[1]) + str(p[3])
@@ -157,8 +150,8 @@ def p_exprname(p):
 #     p[0] = p[1]
 
 def p_exprname2(p):
-    'exprname : EXPRNAME EQUALS expression'
-    names[p[1]] = p[3]
+    'exprname : EXPRNAME EQUALS expression COMMA expression'
+    names[p[1]] = str(p[3] + ',' + p[5])
     p[0] = p[1]
 
 def p_exprname3(p):
@@ -168,14 +161,15 @@ def p_exprname3(p):
 
 #############FUNCTION###############
 def p_function(p):
-    'plot : PLOT FOURIERTRANSFORM expression COMMA factor'
-    pol = FourierTransform(p[3], p[5]).compute()
+    'function : PLOT FOURIERTRANSFORM expression COMMA expression'
+    pol = FourierTransform(p[3], int(p[5])).compute()
     #print pol
     p[0] = pol
 
 def p_function7(p):
     'function : PLOT FOURIERTRANSFORM exprname'
-    pol = FourierTransform(p[3]).compute()
+    equation, number_pointsamples = names[p[3]].split(',')
+    pol = FourierTransform(equation, int(number_pointsamples)).compute()
     # print pol
     p[0] = pol
 
@@ -187,34 +181,6 @@ def p_function6(p):
     p[0] = pol
 
 
-# def p_function1(p):
-#     'function : FOURIERTRANSFORM LPAREN exprname RPAREN'
-#     p[0] = Polynomial(coefi(names[p[3]])).show()
-#     print p[0]
-
-# def p_function2(p):
-#     'function : PLOT expression'
-#     p[0] = str(p[1]) + str(p[2])
-#     print p[2]
-#
-# def p_function3(p):
-#     'function : PLOT exprname '
-#     p[0] = str(p[1]) + " " + str(p[2])
-#     print names[p[2]]
-#
-# def p_function4(p):
-#     'function : PLOT SHOWTEXT '
-#     p[0] = str(p[1]) +  str(p[2])
-#     temp = p[2][1:-1]
-#     print temp
-#
-# def p_function5(p):
-#     'function : SHOW LPAREN SHOWTEXT COMMA exprname RPAREN'
-#     p[0] = str(p[1]) + '(' + str(p[3]) + ',' + str(p[5]) +')'
-#     temp = p[3][1:-1] + " " + names[p[5]]
-#     print (temp)
-
-
 
 ############EXPRESSION###############   #OK
 def p_expression_plus(p):
@@ -224,6 +190,31 @@ def p_expression_plus(p):
 def p_expression_minus(p):
     'expression : expression MINUS term'
     p[0] = str(p[1]) + '-' + str(p[3])
+
+def p_expression_cos(p):
+    'expression : COS LPARENT expression RPARENT'
+    p[0] = p[1] + '(' + p[3] + ')'
+
+def p_expression_sin(p):
+    'expression : SIN LPARENT expression RPARENT'
+    p[0] = p[1](p[3])
+
+def p_expression_exp(p):
+    'expression : EXP LPARENT expression RPARENT'
+    p[0] = p[1](p[3])
+
+def p_expression_cos_amplitude(p):
+    'expression : term COS LPARENT expression RPARENT'
+    p[0] = p[1]*(p[2](p[4]))
+
+def p_expression_sin_amplitude(p):
+    'expression : term SIN LPARENT expression RPARENT'
+    p[0] = p[1]*(p[2](p[4]))
+
+def p_expression_exp_amplitude(p):
+    'expression : term EXP LPARENT expression RPARENT'
+    p[0] = p[1]*(p[2](p[4]))
+
 
 def p_expression_times(p):
     'expression : expression TIMES term'
@@ -242,10 +233,6 @@ def p_term_times(p):
     'term : factor variable'
     p[0] = str(p[1]) + str(p[2])
 
-def p_term_times_2(p):
-    'term : factor  variable EXPONENT factor'
-    p[0] = str(p[1]) + str(p[2]) + '^' + str(p[4])
-
 def p_term_var_exp(p):
     'term : variable EXPONENT factor'
     p[0] = str(p[1]) + '^' + str(p[3])
@@ -263,34 +250,14 @@ def p_factor_num(p):
     'factor : NUMBER'
     p[0] = str(p[1])
 
-# def p_factor_pi(p):
-#     'factor : PI'
-#     p[0] = str(p[1])
-#
-# def p_factor_cos(p):
-#     'factor : COS'
-#     p[0] = str(p[1])
-#
-# def p_factor_sin(p):
-#     'factor : SIN'
-#     p[0] = str(p[1])
-#
-# def p_factor_e(p):
-#     'factor : EXP'
-#     p[0] = str(p[1])
+def p_factor_pi(p):
+    'factor : PI'
+    p[0] = str(p[1])
 
 #############VARIABLE###############
 def p_variable_t(p):
     'variable : VART'
     p[0] = str(p[1])
-
-# def p_factor_pulse(p):
-#     'factor : PULSE'
-#     p[0] = str(p[1])
-
-#def p_factor_expr(p):
-#    'factor : LPAREN expression RPAREN'
-#    p[0] = '(' + str(p[2]) + ')'
 
 
 # Error rule for syntax errors

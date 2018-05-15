@@ -11,7 +11,6 @@ class FourierTransform(object):
       N = self.number_samples
       T = 1 / N
       t = linspace(0.0, N * T, N)
-      # x = 'cos(2*pi*50*t)'
 
       y = eval(self.equation)
       print(y)
