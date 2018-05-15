@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AXISX AXISY BAR COMMA DIVIDE EQUALS EXPONENT EXPRNAME LINE LPARENT MINUS NUMBER PLOT PLUS PRINT QUOTATION RPARENT SHOWTEXT TIMES TITLEtitle : TITLE EQUALS SHOWTEXTprint : PRINT TITLE'
+_lr_signature = 'COMMA COS DIVIDE EQUALS EXP EXPONENT EXPRNAME FOURIERTRANSFORM LPARENT MINUS NUMBER PI PLOT PLUS PULSE QUOTATION RPARENT SHOWTEXT SIN TIMES VARTlangfunction : fouriertransformlangfunction : functionlangfunction : exprnamefouriertransform : expression COMMA factorexprname : EXPRNAMEexprname : EXPRNAME EQUALS expressionexprname : EXPRNAME EQUALS EXPRNAMEplot : PLOT FOURIERTRANSFORM expression COMMA factorfunction : PLOT FOURIERTRANSFORM exprnamefunction : PLOT FOURIERTRANSFORM LPARENT expression RPARENTexpression : expression PLUS termexpression : expression MINUS termexpression : expression TIMES termexpression : expression DIVIDE termexpression : termterm : factor variableterm : factor  variable EXPONENT factorterm : variable EXPONENT factorterm : variableterm : factorfactor : NUMBERfactor : PIfactor : COSfactor : SINfactor : EXPvariable : VART'
     
-_lr_action_items = {'TITLE':([0,],[2,]),'$end':([1,4,],[0,-1,]),'EQUALS':([2,],[3,]),'SHOWTEXT':([3,],[4,]),}
+_lr_action_items = {'PLOT':([0,],[7,]),'EXPRNAME':([0,23,24,],[8,8,34,]),'NUMBER':([0,17,18,19,20,21,24,25,31,33,],[11,11,11,11,11,11,11,11,11,11,]),'PI':([0,17,18,19,20,21,24,25,31,33,],[12,12,12,12,12,12,12,12,12,12,]),'COS':([0,17,18,19,20,21,24,25,31,33,],[13,13,13,13,13,13,13,13,13,13,]),'SIN':([0,17,18,19,20,21,24,25,31,33,],[14,14,14,14,14,14,14,14,14,14,]),'EXP':([0,17,18,19,20,21,24,25,31,33,],[15,15,15,15,15,15,15,15,15,15,]),'VART':([0,6,11,12,13,14,15,18,19,20,21,24,33,],[16,16,-21,-22,-23,-24,-25,16,16,16,16,16,16,]),'$end':([1,2,3,4,6,8,9,10,11,12,13,14,15,16,22,26,27,28,29,30,32,34,35,36,37,39,],[0,-1,-2,-3,-20,-5,-15,-19,-21,-22,-23,-24,-25,-26,-16,-4,-11,-12,-13,-14,-9,-7,-6,-18,-17,-10,]),'COMMA':([5,6,9,10,11,12,13,14,15,16,22,27,28,29,30,36,37,],[17,-20,-15,-19,-21,-22,-23,-24,-25,-26,-16,-11,-12,-13,-14,-18,-17,]),'PLUS':([5,6,9,10,11,12,13,14,15,16,22,27,28,29,30,35,36,37,38,],[18,-20,-15,-19,-21,-22,-23,-24,-25,-26,-16,-11,-12,-13,-14,18,-18,-17,18,]),'MINUS':([5,6,9,10,11,12,13,14,15,16,22,27,28,29,30,35,36,37,38,],[19,-20,-15,-19,-21,-22,-23,-24,-25,-26,-16,-11,-12,-13,-14,19,-18,-17,19,]),'TIMES':([5,6,9,10,11,12,13,14,15,16,22,27,28,29,30,35,36,37,38,],[20,-20,-15,-19,-21,-22,-23,-24,-25,-26,-16,-11,-12,-13,-14,20,-18,-17,20,]),'DIVIDE':([5,6,9,10,11,12,13,14,15,16,22,27,28,29,30,35,36,37,38,],[21,-20,-15,-19,-21,-22,-23,-24,-25,-26,-16,-11,-12,-13,-14,21,-18,-17,21,]),'RPARENT':([6,9,10,11,12,13,14,15,16,22,27,28,29,30,36,37,38,],[-20,-15,-19,-21,-22,-23,-24,-25,-26,-16,-11,-12,-13,-14,-18,-17,39,]),'FOURIERTRANSFORM':([7,],[23,]),'EQUALS':([8,],[24,]),'EXPONENT':([10,16,22,],[25,-26,31,]),'LPARENT':([23,],[33,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'title':([0,],[1,]),}
+_lr_goto_items = {'langfunction':([0,],[1,]),'fouriertransform':([0,],[2,]),'function':([0,],[3,]),'exprname':([0,23,],[4,32,]),'expression':([0,24,33,],[5,35,38,]),'factor':([0,17,18,19,20,21,24,25,31,33,],[6,26,6,6,6,6,6,36,37,6,]),'term':([0,18,19,20,21,24,33,],[9,27,28,29,30,9,9,]),'variable':([0,6,18,19,20,21,24,33,],[10,22,10,10,10,10,10,10,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,7 +26,31 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> title","S'",1,None,None,None),
-  ('title -> TITLE EQUALS SHOWTEXT','title',3,'p_title','lex.py',135),
-  ('print -> PRINT TITLE','print',2,'p_print_title','lex.py',141),
+  ("S' -> langfunction","S'",1,None,None,None),
+  ('langfunction -> fouriertransform','langfunction',1,'p_langfunctions','lex.py',128),
+  ('langfunction -> function','langfunction',1,'p_langfunctions1','lex.py',136),
+  ('langfunction -> exprname','langfunction',1,'p_langfunctions2','lex.py',140),
+  ('fouriertransform -> expression COMMA factor','fouriertransform',3,'p_fouriertransform','lex.py',145),
+  ('exprname -> EXPRNAME','exprname',1,'p_exprname','lex.py',151),
+  ('exprname -> EXPRNAME EQUALS expression','exprname',3,'p_exprname2','lex.py',160),
+  ('exprname -> EXPRNAME EQUALS EXPRNAME','exprname',3,'p_exprname3','lex.py',165),
+  ('plot -> PLOT FOURIERTRANSFORM expression COMMA factor','plot',5,'p_function','lex.py',171),
+  ('function -> PLOT FOURIERTRANSFORM exprname','function',3,'p_function7','lex.py',177),
+  ('function -> PLOT FOURIERTRANSFORM LPARENT expression RPARENT','function',5,'p_function6','lex.py',183),
+  ('expression -> expression PLUS term','expression',3,'p_expression_plus','lex.py',221),
+  ('expression -> expression MINUS term','expression',3,'p_expression_minus','lex.py',225),
+  ('expression -> expression TIMES term','expression',3,'p_expression_times','lex.py',229),
+  ('expression -> expression DIVIDE term','expression',3,'p_expression_divide','lex.py',233),
+  ('expression -> term','expression',1,'p_expression_term','lex.py',237),
+  ('term -> factor variable','term',2,'p_term_times','lex.py',242),
+  ('term -> factor variable EXPONENT factor','term',4,'p_term_times_2','lex.py',246),
+  ('term -> variable EXPONENT factor','term',3,'p_term_var_exp','lex.py',250),
+  ('term -> variable','term',1,'p_term_var','lex.py',254),
+  ('term -> factor','term',1,'p_term_fac','lex.py',258),
+  ('factor -> NUMBER','factor',1,'p_factor_num','lex.py',263),
+  ('factor -> PI','factor',1,'p_factor_pi','lex.py',267),
+  ('factor -> COS','factor',1,'p_factor_cos','lex.py',271),
+  ('factor -> SIN','factor',1,'p_factor_sin','lex.py',275),
+  ('factor -> EXP','factor',1,'p_factor_e','lex.py',279),
+  ('variable -> VART','variable',1,'p_variable_t','lex.py',284),
 ]
