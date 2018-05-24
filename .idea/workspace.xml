@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8a13df6e-658b-49f7-b854-cf5db700b9f1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Fourier Series.py" beforeDir="false" />
-    </list>
+    <list default="true" id="8a13df6e-658b-49f7-b854-cf5db700b9f1" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +14,8 @@
       <file leaf-file-name="lex.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="165" lean-forward="true" selection-start-line="165" selection-end-line="168" selection-end-column="15" />
+            <state relative-caret-position="-878">
+              <caret line="174" lean-forward="true" selection-start-line="174" selection-end-line="174" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -70,16 +67,16 @@
         <option value="$PROJECT_DIR$/d3/de.v3.js" />
         <option value="$PROJECT_DIR$/d3/index.html" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/FourierTransform.py" />
+        <option value="$PROJECT_DIR$/FourierTransform.py" />
         <option value="$PROJECT_DIR$/lex.py" />
-        <option value="$PROJECT_DIR$/FourierTransform.py" />
-        <option value="$PROJECT_DIR$/FourierTransform.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="21" />
     <option name="width" value="1281" />
-    <option name="height" value="707" />
+    <option name="height" value="708" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -102,8 +99,9 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -380,7 +378,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526402711795</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Features Added">
+      <created>1527109028656</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1527109028656</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -429,7 +434,8 @@
     <MESSAGE value="added exponential support" />
     <MESSAGE value="change name of interpreter" />
     <MESSAGE value="Changed interpreter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed interpreter" />
+    <MESSAGE value="Features Added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Features Added" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/lex.py">
@@ -562,8 +568,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="165" lean-forward="true" selection-start-line="165" selection-end-line="168" selection-end-column="15" />
+        <state relative-caret-position="-878">
+          <caret line="174" lean-forward="true" selection-start-line="174" selection-end-line="174" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

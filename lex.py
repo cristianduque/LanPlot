@@ -173,6 +173,7 @@ def p_exprname4(p):
     names[p[1]] = str(p[3])
     p[0] = p[1]
 
+
 #############FUNCTION###############
 def p_function(p):
     'function : PLOT FOURIERTRANSFORM expression COMMA expression'
@@ -203,10 +204,22 @@ def p_function4(p):
     'function : PLOT exprname'
     p[0] = plotfft(names[p[2]])
 
-def p_funtion5(p):
+def p_function5(p):
     'function : PLOT FOURIERTRANSFORM exprname COMMA expression'
     pol = FourierTransform(names[p[3]], int(p[5])).compute()
     p[0] = pol
+
+def p_function6(p):
+    'function : FOURIERTRANSFORM exprname'
+    equation, number_pointsamples = names[p[2]].split(',')
+    pol = FourierTransform(equation, int(number_pointsamples)).computefft()
+    p[0] = pol
+
+def p_function7(p):
+    'function : FOURIERTRANSFORM exprname COMMA expression'
+    pol = FourierTransform(names[p[2]], int(p[4])).computefft()
+    p[0] = pol
+
 
 ############EXPRESSION###############   #OK
 def p_expression_plus(p):
