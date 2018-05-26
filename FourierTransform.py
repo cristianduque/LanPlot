@@ -1,6 +1,6 @@
 from scipy.fftpack import fft
 import matplotlib.pyplot as plt
-from numpy import cos,linspace,pi,abs,sin,heaviside,exp
+from numpy import cos,linspace,pi,abs,sin,exp
 
 
 class FourierTransform(object):
@@ -9,15 +9,13 @@ class FourierTransform(object):
       self.number_samples = number_samples
 
    def compute(self):
-      N = self.number_samples # Number of samplepoints
+      N = self.number_samples # Number of sample points
       T = 1 / N    # sample spacing
       t = linspace(0.0, N * T, N)  #time domain
 
       transform_equation = eval(self.equation)
-
       fourier_equation = fft(transform_equation)  # fft computing and normalization
-
-      frequency_domain = linspace(0.0, 1.0 / (2.0 * T), N // 2)
+      frequency_domain = linspace(0.0, 1.0 / (2.0 * T), N // 2)  #frequency domain upon to plot
 
       plt.title("Fourier Transform Graph")
       plt.xlabel("Frequency")
