@@ -23,6 +23,7 @@ class FourierTransform(object):
       plt.plot(frequency_domain, 2.0 / N * (abs(fourier_equation[0:N // 2])))  # one side frequency range and plotting spectrum
       plt.grid()
       plt.show()
+      plt.close()
 
    def computefft(self):
       N = self.number_samples
