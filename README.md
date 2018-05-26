@@ -1,4 +1,4 @@
-<span><a class="tar_download_link" href="https://github.com/cristianduque/LanPlot/archive/master">Download tar.gz file</a>|<a class="zip_download_link" href="https://github.com/cristianduque/LanPlot/archive/master.zip">Download zip file </a></span>
+<span><a class="tar_download_link" href="https://github.com/cristianduque/LanPlot/archive/tarball/master">Download tar.gz file</a> | <a class="zip_download_link" href="https://github.com/cristianduque/LanPlot/archive/master.zip">Download zip file </a></span>
 
 <h1> LanPlot </h1>
 
