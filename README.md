@@ -22,7 +22,7 @@ LanPlot can take inputs in the following ways:
 ```
 An example of a program could be: 
 ```
- #(LanPlot) > var = cos(2*pi*50*t), 600,
+ #(LanPlot) > var = cos(2*pi*50*t), 600
 #var
 #(LanPlot) > plot fouriertransform var //output graph is generated
 
