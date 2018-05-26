@@ -11,6 +11,7 @@ The main idea for this language is to make graphs of the Fourier Transform of si
 <h3>Example of Program</h3>
 
 LanPlot can take inputs in the following ways:
+```
 •	PLOT FOURIERTRANSFORM signal, number_of_samples
 •	PLOT FOURIERTRANSFORM variable
 •	variable = signal, number_of_samples
@@ -18,6 +19,7 @@ LanPlot can take inputs in the following ways:
 •	PLOT variable
 •	variable = variable
 
+```
 An example of a program could be: 
 ```
  #(LanPlot) > var = cos(2*pi*50*t), 600,
