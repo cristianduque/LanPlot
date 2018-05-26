@@ -1,3 +1,5 @@
+<span class="credits right"><a class="tar_download_link" href="https://github.com/cristianduque/LanPlot/archive/master">tar</a>   |   <a class="zip_download_link" href="https://github.com/cristianduque/LanPlot/archive/master.zip">zip</a></span>
+
 <h1> LanPlot </h1>
 
 <h3> Introduction </h3>
