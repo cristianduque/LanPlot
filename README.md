@@ -27,3 +27,4 @@ An example of a program could be:
 #(LanPlot) > plot fouriertransform var //output graph is generated
 
 ```
+<h3> LanPlot Demo </h3>
