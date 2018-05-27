@@ -30,4 +30,5 @@ An example of a program could be:
 
 ```
 <h3> LanPlot Demo </h3>
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=xqD7CVC3tUc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/watch?v=xqD7CVC3tUc"   
+width="640" height="360" frameborder="0" ></iframe>
