@@ -30,4 +30,4 @@ An example of a program could be:
 
 ```
 <h3> LanPlot Demo </h3>
-{ % include youtubePlayer.html id="xqD7CVC3tUc" %}
+{% include youtubePlayer.html id=xqD7CVC3tUc %}
