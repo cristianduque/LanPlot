@@ -30,3 +30,7 @@ An example of a program could be:
 
 ```
 <h3> LanPlot Demo </h3>
+{% include youtubePlayer.html id="xqD7CVC3tUc" %}
+
+<h3> Contributors </h3>
+LanPlot was developed by Cristian Duque (@cristianduque) and Gladymar Oneill (@goneill09) for the Programming Languages course at the University of Puerto Rico Mayaguez Campus
